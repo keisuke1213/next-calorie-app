@@ -4,8 +4,8 @@ import { Box, Typography, Button, Tabs, Tab } from "@mui/material";
 import { fetchRouteData } from "../actions/fetchRouteData";
 
 type GetLocationProps = {
-  originCoords: { latitude: number; longitude: number };
-  destination: { latitude: number | null; longitude: number | null };
+  originCoords: { latitude: number; longitude: number } | null;
+  destination: { latitude: number | null; longitude: number | null } | null;
   distance: number | null;
   duration: number | null;
   calories: number | null;
@@ -20,6 +20,7 @@ const Direction: FC<GetLocationProps> = ({
   destination,
   setFetchRouteDataResult,
 }) => {
+  if (!originCoords) return null;
   const [selectedMode, setSelectedMode] = useState("driving");
 
   const modes = [
@@ -34,6 +35,7 @@ const Direction: FC<GetLocationProps> = ({
     newValue: string
   ) => {
     setSelectedMode(newValue);
+    if (!destination) return;
     const res = await fetchRouteData(newValue, originCoords, destination);
     if (res) {
       setFetchRouteDataResult(res);

@@ -3,14 +3,12 @@ import React, { FC } from "react";
 import { Box, TextField, Button } from "@mui/material";
 
 type GetLocationProps = {
-  origin: string;
-  setOrigin: (text: string) => void;
+  originCoords: { latitude: number; longitude: number } | null;
   handleSubmit: (formData: FormData) => Promise<void>;
 };
 
 const InputLocation: FC<GetLocationProps> = ({
-  origin,
-  setOrigin,
+  originCoords,
   handleSubmit,
 }) => {
   return (
@@ -19,8 +17,7 @@ const InputLocation: FC<GetLocationProps> = ({
         fullWidth
         variant="outlined"
         name="origin"
-        defaultValue={origin}
-        onChange={(e) => setOrigin(e.target.value)}
+        defaultValue={"現在地"}
         placeholder="出発地を入力"
         sx={styles.input}
       />

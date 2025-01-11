@@ -7,6 +7,7 @@ import { fetchCoordinatesByName } from "./actions/fetchCoordinatesByName";
 import { fetchRouteData } from "./actions/fetchRouteData";
 import { useState } from "react";
 import useLocation from "./hooks/useLoction";
+import { fetchWebsiteAndCalories } from "./actions/fetchWebsiteAndCalories";
 
 export default function App() {
   const { originCoords } = useLocation();
@@ -29,7 +30,7 @@ export default function App() {
   const handleSubmit = async (formData: FormData) => {
     const origin = formData.get("origin") as string;
     const destination = formData.get("destination") as string;
-
+    fetchWebsiteAndCalories( destination );
     const destinationCoords = await fetchCoordinatesByName(destination);
 
     if (originCoords && destinationCoords) {
@@ -101,4 +102,8 @@ const styles = {
   direction: {
     zIndex: 1,
   },
+};
+
+export const getDestinationFromFormData = (formData: FormData): string => {
+  return formData.get("destination") as string;
 };

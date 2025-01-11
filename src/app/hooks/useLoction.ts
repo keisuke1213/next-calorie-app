@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 
 const useLocation = () => {
-  const [origin, setOrigin] = useState("現在地取得中...");
   const [originCoords, setOriginCoords] = useState({
     latitude: 35.681236,
     longitude: 139.767125,
@@ -17,7 +16,6 @@ const useLocation = () => {
 
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setOrigin("現在地");
           setOriginCoords({
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
@@ -33,7 +31,7 @@ const useLocation = () => {
     getCurrentLocation();
   }, []);
 
-  return { origin, originCoords, setOrigin, setOriginCoords };
+  return { originCoords };
 };
 
 export default useLocation;

@@ -1,19 +1,20 @@
 "use client";
 import Direction from "./map/Direction";
 import InputLocation from "./map/InputLocation";
-import useLocation from "./hooks/useLoction";
 import { Box } from "@mui/material";
 import ShowMap from "./map/ShowMap";
 import { fetchCoordinatesByName } from "./actions/fetchCoordinatesByName";
 import { fetchRouteData } from "./actions/fetchRouteData";
 import { useState } from "react";
+import useLocation from "./hooks/useLoction";
 
 export default function App() {
-  const { origin, originCoords, setOrigin, setOriginCoords } = useLocation();
-  const [destination, setDestination] = useState({
-    latitude: null,
-    longitude: null,
-  });
+  const { originCoords } = useLocation();
+
+  const [destination, setDestination] = useState<{
+    latitude: number;
+    longitude: number;
+  } | null>(null);
   const [distance, setDistance] = useState<number | null>(null);
   const [duration, setDuration] = useState<number | null>(null);
   const [calories, setCalories] = useState<number | null>(null);
@@ -45,10 +46,7 @@ export default function App() {
   };
 
   const getLocationProps = {
-    origin,
-    setOrigin,
     originCoords,
-    setOriginCoords,
     handleSubmit,
   };
 

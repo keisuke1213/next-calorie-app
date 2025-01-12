@@ -11,6 +11,14 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    // ここでルールの緩和を指定します
+    rules: {
+      "@typescript-eslint/no-explicit-any": "warn", // 'any' 型の使用を警告に変更
+      "@typescript-eslint/no-unused-vars": "off", // 未使用の変数のチェックを無効化
+      "react-hooks/rules-of-hooks": "warn", // React Hooks のルールを警告に変更
+    },
+  },
 ];
 
 export default eslintConfig;

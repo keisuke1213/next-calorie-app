@@ -9,7 +9,7 @@ import { useState } from "react";
 import useLocation from "./hooks/useLoction";
 import { fetchWebsiteAndCalories } from "./actions/fetchWebsiteAndCalories";
 import { fetchPlace } from "./actions/fetchPlace";
-import { Place } from "./types/place";
+import { Place } from "../../frontend/app/types/place";
 import { CSSProperties } from "react";
 
 export default function App() {

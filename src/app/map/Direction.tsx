@@ -9,6 +9,7 @@ type GetLocationProps = {
   distance: number | null;
   duration: number | null;
   calories: number | null;
+  intake: string | null;
   setFetchRouteDataResult: (res: any) => void;
 };
 
@@ -18,11 +19,12 @@ const Direction: FC<GetLocationProps> = ({
   duration,
   calories,
   destination,
+  intake,
   setFetchRouteDataResult,
 }) => {
   if (!originCoords) return null;
   const [selectedMode, setSelectedMode] = useState("driving");
-
+  console.log("intake", intake);
   const modes = [
     { key: "driving", label: "車" },
     { key: "walking", label: "徒歩" },
@@ -67,7 +69,10 @@ const Direction: FC<GetLocationProps> = ({
           <Typography sx={styles.text}>距離: {distance}</Typography>
           <Typography sx={styles.text}>所要時間: {duration}</Typography>
           <Typography sx={styles.text}>
-            消費カロリー: {calories && calories > 0 ? `${calories}kcal` : 0}
+            予想消費カロリー: {calories && calories > 0 ? `${calories}kcal` : 0}
+          </Typography>
+          <Typography sx={styles.text}>
+            予想摂取カロリー：{intake ? `${intake}kcal` : 0}
           </Typography>
         </Box>
       </Box>

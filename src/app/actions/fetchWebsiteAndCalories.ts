@@ -1,12 +1,13 @@
 "use server";
 import axios from "axios";
-import { Restaurant } from "../types/restaurant";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import App from "../page";
+import { Place } from "../types/place";
 
 export async function fetchWebsiteAndCalories(
   restaurant: string,
   retryCount = 0
-): Promise<number | void> {
+): Promise<string | void> {
   const MAX_RETRIES = 3;
 
   try {
@@ -43,21 +44,24 @@ export async function fetchWebsiteAndCalories(
       );
       console.log("genAI", genAI); //genAI is the instance of the GoogleGenerativeAI class
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-      const prompt = `content: ${website}, プロンプト: contentを解析して、飲食関連の情報だった場合、得られた情報から一般的な摂取カロリーを予測してください。困難な場合は概算で構いません。そして、もし飲食関連の情報ではなかった場合は摂取カロリーは0キロカロリーとしてください。最後にカロリー情報の数値を「」で囲んでください。`;
+      const prompt = `content: ${website}, プロンプト: contentを解析して、飲食関連の情報だった場合、得られた情報から一般的な摂取カロリーを予測してください。困難な場合は概算で構いません。もし飲食関連の情報ではなかった場合は摂取カロリーは0キロカロリーとしてください。そして、カロリーの数字だけを「」で囲み、カロリー数値以外は「」で囲まないでください。`;
       const result = await model.generateContent(prompt); //ここから抽出した情報を正規表現でさらに抽出
       console.log(
         "result",
-        result.response.candidates?.map((e) => e.content.parts)
-      );
-      const calorieInfo = Number(
-        result.response.candidates
-          ?.map((e) => e.content.parts)
-          .join(" ")
-          .match(/「(.*?)」/)
+        result.response.candidates?.map(
+          (e) => e.content.parts.map((e) => e.text)[0]
+        )
       );
 
+      const responseText = result.response.candidates
+        ?.map((e) => e.content.parts.map((e) => e.text)[0])
+        .join(" ");
+      const match = responseText?.match(/「(.*?)」/);
+      const calorieInfo = match ? match[1] : null;
+
+      console.log("calorieInfo", calorieInfo); // 正規表現で抽出した情報を確認
       if (calorieInfo) {
-        console.log("Extracted calorie information:");
+        console.log("Extracted calorie information:", calorieInfo);
         return calorieInfo; // 正規表現で抽出した情報を返す
       } else {
         console.warn("No calorie information found in the response.");

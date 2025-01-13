@@ -1,7 +1,7 @@
 "use client";
 import Direction from "./map/Direction";
 import InputLocation from "./map/InputLocation";
-import { Box, Card, CardContent, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, Typography } from "@mui/material";
 import ShowMap from "./map/ShowMap";
 import { fetchCoordinatesByName } from "./actions/fetchCoordinatesByName";
 import { fetchRouteData } from "./actions/fetchRouteData";
@@ -9,7 +9,7 @@ import { useState } from "react";
 import useLocation from "./hooks/useLoction";
 import { fetchWebsiteAndCalories } from "./actions/fetchWebsiteAndCalories";
 import { fetchPlace } from "./actions/fetchPlace";
-import { Place } from "../../frontend/app/types/place";
+import { Place } from "./types/place";
 import { CSSProperties } from "react";
 
 export default function App() {

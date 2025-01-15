@@ -1,7 +1,7 @@
 "use client";
 import React, { FC, useState } from "react";
 import { Box, Typography, Button, Tabs, Tab } from "@mui/material";
-import { fetchRouteData } from "../actions/fetchRouteData";
+import { fetchRouteData } from "../../actions/fetchRouteData";
 
 type GetLocationProps = {
   originCoords: { latitude: number; longitude: number } | null;
@@ -26,10 +26,10 @@ const Direction: FC<GetLocationProps> = ({
   const [selectedMode, setSelectedMode] = useState("driving");
   console.log("intake", intake);
   const modes = [
-    { key: "driving", label: "車" },
-    { key: "walking", label: "徒歩" },
-    { key: "bicycling", label: "自転車" },
-    { key: "transit", label: "公共交通機関" },
+    { key: "driving", label: "🚘" },
+    { key: "walking", label: "🚶" },
+    { key: "bicycling", label: "🚲" },
+    { key: "transit", label: "🚃" },
   ];
 
   const handleModeChange = async (
@@ -57,9 +57,9 @@ const Direction: FC<GetLocationProps> = ({
           {modes.map((mode) => (
             <Tab
               key={mode.key}
-              label={mode.label}
+              sx={styles.button}
+              label={mode.label || ""}
               value={mode.key}
-              sx={selectedMode === mode.key ? styles.activeTab : styles.tab}
             />
           ))}
         </Tabs>
@@ -72,7 +72,7 @@ const Direction: FC<GetLocationProps> = ({
             予想消費カロリー: {calories && calories > 0 ? `${calories}kcal` : 0}
           </Typography>
           <Typography sx={styles.text}>
-            予想摂取カロリー：{intake ? `${intake}kcal` : 0}
+            平均摂取カロリー：{intake ? `${intake}kcal` : 0}
           </Typography>
         </Box>
       </Box>
@@ -85,29 +85,45 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    marginBottom: 2,
+    justifyContent: "center", // ボタンを中央揃え
+    marginTop: "40px", // 全体の上余白を調整
+  },
+  tabContainer: {
+    marginBottom: 5,
+    border: "2px solid rgb(127, 127, 127)",
+    backgroundColor: "#F9F9F9",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)", // 通常時のドロップシャドウ
+    borderRadius: 10,
+    padding: 3,
+  },
+  button: {
+    fontSize: "3em", // 絵文字のサイズを調整
+    margin: "0px 20px", // ボタンの間隔を調整
+    padding: "10px 20px", // ボタンの余白を調整
+    borderRadius: "20px", // ボタンに丸みを追加
+    backgroundColor: "#F9F9F9", // ボタンの背景色
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)", // 通常時のドロップシャドウ
+    transition: "box-shadow 0.3s ease", // なめらかな切り替え
+    "&:hover": {
+      backgroundColor: "#FDFDFD", // ホバー時の背景色
+      boxShadow: "inset 0 4px 8px rgba(0, 0, 0, 0.5)", // ホバー時のインナーシャドウ
+    },
   },
   content: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
-  },
-  tabContainer: {
-    marginBottom: 2,
-  },
-  tab: {
-    padding: 1,
-    margin: 0.5,
-    backgroundColor: "#ddd",
-    borderRadius: 1,
-  },
-  activeTab: {
-    backgroundColor: "#007BFF",
-    color: "#fff",
+    alignItems: "justify",
+    border: "2px solid rgb(127, 127, 127)",
+    backgroundColor: "#F9F9F9",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)", // 通常時のドロップシャドウ
+    borderRadius: 10,
+    padding: 4,
   },
   text: {
-    fontSize: 16,
+    fontSize: 30,
+    fontfamily: "Arial",
     color: "black",
+    padding: 2,
   },
 };
 

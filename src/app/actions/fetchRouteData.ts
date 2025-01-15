@@ -78,6 +78,11 @@ export const fetchRouteData = async (
       } else {
         leg.steps.forEach((step: { duration: { value: number } }) => {
           const time = step.duration.value / 3600;
+          const totalMinutes = Math.round(time * 60);
+          const hours = Math.floor(totalMinutes / 60);
+          const minutes = totalMinutes % 60;
+          duration = `${hours}時間${minutes}分`;
+          duration;
           calories += Math.round(mets * 65 * time);
         });
       }

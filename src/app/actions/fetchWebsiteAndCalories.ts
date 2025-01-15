@@ -44,7 +44,7 @@ export async function fetchWebsiteAndCalories(
       );
       console.log("genAI", genAI); //genAI is the instance of the GoogleGenerativeAI class
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-      const prompt = `content: ${website}, プロンプト: contentを解析して、飲食関連の情報だった場合、得られた情報から一般的な摂取カロリーを予測してください。困難な場合は概算で構いません。もし飲食関連の情報ではなかった場合は摂取カロリーは0キロカロリーとしてください。そして、カロリーの数字だけを「」で囲み、カロリー数値以外は「」で囲まないでください。`;
+      const prompt = `content: ${website}, プロンプト: contentを解析して、飲食関連の情報だった場合、得られた情報から一般的な摂取カロリーを予測してください。困難な場合は概算で構いません。そして、カロリーの数字だけを「」で囲み、カロリー数値以外は「」で囲まないでください。例外として、もし飲食関連の情報ではなかった場合は「」で囲み、予測不能と返してください。`;
       const result = await model.generateContent(prompt); //ここから抽出した情報を正規表現でさらに抽出
       console.log(
         "result",

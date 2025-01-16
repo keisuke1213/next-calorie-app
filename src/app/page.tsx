@@ -97,6 +97,7 @@ export default function App() {
   const [places, setPlaces] = useState<Place[]>([]);
   const [intake, setIntake] = useState<string | null>(null);
   const [perCalories, setPerCalories] = useState<PerCalories>([]);
+  const [selectedMode, setSelectedMode] = useState("driving");
 
   const options = Array.from({ length: 121 }, (_, i) => i + 30);
   const [weight, setWeight] = useState<number>(options[0]);
@@ -119,6 +120,7 @@ export default function App() {
   };
 
   const handleMarkerPress = async (place: Place) => {
+    setSelectedMode("driving");
     setPlaces([]);
     const destinationCoords = await fetchCoordinatesByName(place.name);
     const intakeRes = (await fetchWebsiteAndCalories(place.name)) ?? null;
@@ -158,6 +160,8 @@ export default function App() {
     perCalories,
     setPerCalories,
     weight,
+    selectedMode,
+    setSelectedMode,
   };
 
   const headerProps = {

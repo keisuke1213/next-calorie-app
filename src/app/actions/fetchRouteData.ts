@@ -21,7 +21,7 @@ export const fetchRouteData = async (
 
   const origin = `${originCoords.latitude},${originCoords.longitude}`;
   const destination = `${destinationCoords.latitude},${destinationCoords.longitude}`;
-  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+  const apiKey = process.env.GOOGLE_MAPS_API_KEY;
 
   let isBicycling = false;
 

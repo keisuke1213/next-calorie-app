@@ -11,8 +11,8 @@ export async function fetchWebsiteAndCalories(
   try {
     const queryParams = new URLSearchParams({
       q: `${restaurant}`,
-      key: process.env.NEXT_PUBLIC_CUSTOM_SEARCH_API_KEY!,
-      cx: process.env.NEXT_PUBLIC_CUSTOM_SEARCH_ENGINE_ID!,
+      key: process.env.CUSTOM_SEARCH_API_KEY!,
+      cx: process.env.CUSTOM_SEARCH_ENGINE_ID!,
     });
 
     const controller = new AbortController();

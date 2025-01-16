@@ -10,11 +10,11 @@ export const fetchCoordinatesByName = async (
       `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${encodeURIComponent(
         name
       )}&inputtype=textquery&fields=geometry&key=${
-        process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
+        process.env.GOOGLE_MAPS_API_KEY
       }`
     );
 
-   const data = await response.json();
+    const data = await response.json();
     if (data.candidates && data.candidates[0]) {
       const { lat, lng } = data.candidates[0].geometry.location;
       console.log({ lat, lng });

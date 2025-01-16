@@ -17,6 +17,8 @@ type GetLocationProps = {
   sumCalories: number | null;
   setSumCalories: (sumCalories: number) => void;
   weight: number;
+  selectedMode: string;
+  setSelectedMode: (mode: string) => void;
 };
 
 const Direction: FC<GetLocationProps> = ({
@@ -31,9 +33,10 @@ const Direction: FC<GetLocationProps> = ({
   sumCalories,
   setSumCalories,
   weight,
+  setSelectedMode,
+  selectedMode,
 }) => {
   if (!originCoords) return null;
-  const [selectedMode, setSelectedMode] = useState("driving");
 
   const modes = [
     { key: "driving", label: "🚘" },

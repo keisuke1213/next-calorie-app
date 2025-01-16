@@ -12,7 +12,7 @@ import {
 import ShowMap from "./components/map/ShowMap";
 import { fetchCoordinatesByName } from "./actions/fetchCoordinatesByName";
 import { fetchRouteData } from "./actions/fetchRouteData";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useLocation from "./hooks/useLoction";
 import { fetchWebsiteAndCalories } from "./actions/fetchWebsiteAndCalories";
 import { fetchPlace } from "./actions/fetchPlace";
@@ -130,6 +130,7 @@ export default function App() {
   const [intake, setIntake] = useState<string | null>(null);
   const [perCalories, setPerCalories] = useState<PerCalories>([]);
   const [selectedMode, setSelectedMode] = useState("driving");
+  const [isMobile, setIsMobile] = useState(false);
 
   const options = Array.from({ length: 121 }, (_, i) => i + 30);
   const [weight, setWeight] = useState<number>(options[0]);
@@ -208,10 +209,23 @@ export default function App() {
     destination,
   };
   console.log("intake", intake);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // 初回レンダリング時にチェック
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   return (
     <Box sx={styles.container}>
       <Header {...headerProps} />
-      <ShowMap {...showMapProps} />
+      {!isMobile && <ShowMap {...showMapProps} />}
       <Box sx={styles.overlay}>
         <InputLocation {...getLocationProps} />
 

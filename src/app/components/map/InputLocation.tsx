@@ -12,7 +12,17 @@ const InputLocation: FC<GetLocationProps> = ({
   handleSubmit,
 }) => {
   return (
-    <Box component="form" action={handleSubmit} sx={styles.container}>
+    <Box
+      component="form"
+      action={handleSubmit}
+      sx={{
+        ...styles.container,
+        "@media (max-width: 768px)": {
+          flexDirection: "column",
+          padding: 1,
+        },
+      }}
+    >
       <TextField
         fullWidth
         variant="outlined"
@@ -31,6 +41,11 @@ const InputLocation: FC<GetLocationProps> = ({
               border: "none", // 境界線を消す
             },
           },
+          "@media (max-width: 768px)": {
+            width: "73%",
+            marginTop: "65px",
+            marginLeft: "-375px",
+          },
         }}
       />
 
@@ -43,7 +58,7 @@ const InputLocation: FC<GetLocationProps> = ({
           height: "50px", // 高さを指定
           marginLeft: "655px", // ボタンとテキストボックスの間隔を調整
           marginTop: "-67px", // ボタンとテキストボックスの間隔を調整
-          marginBottom: "-22px", 
+          marginBottom: "-22px",
           minWidth: "50px", // ボタンの最小幅を設定（ボタンが小さくなるのを防ぐ）
           borderRadius: "40px", // 必要に応じて角を丸く
           fontSize: "30px", // フォントサイズを指定
@@ -52,6 +67,11 @@ const InputLocation: FC<GetLocationProps> = ({
           transition: "box-shadow 0.3s ease", // なめらかな切り替え
           "&:hover": {
             boxShadow: "inset 0 4px 8px rgba(0, 0, 0, 0.5)", // ホバー時のインナーシャドウ
+          },
+          "@media (max-width: 768px)": {
+            width: "15%",
+            marginLeft: "-40px",
+            marginTop: "-66.5px",
           },
         }}
       >

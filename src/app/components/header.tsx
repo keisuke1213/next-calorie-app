@@ -1,7 +1,7 @@
 "use client";
 import Pulldown from "./pulldown";
 import { FC } from "react";
-
+import { CSSProperties } from "react";
 interface NavLink {
   href: string;
   label: string;
@@ -25,22 +25,9 @@ const Header: FC<HeaderProps> = ({ weight, setWeight, options }) => {
   };
   return (
     <header className="bg-[#EF7042] text-white pt-3 pb-0">
-      <div className="container mx-auto flex items-center justify-between py-4 px-6">
+      <div className="container mx-auto flex flex-wrap items-center justify-between py-4 px-4 md:px-6">
         {/* Logo */}
-        <div className="text-5xl font-bold -ml-20 pl-10 ">CALOCOT</div>
-
-        {/* Navigation */}
-        <nav>
-          <ul className="flex space-x-6">
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                {/* <Link href={link.href}>
-                  <a className="hover:text-gray-300">{link.label}</a>
-                </Link> */}
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <div className="text-5xl md:text-5xl font-bold text-center md:text-left w-full md:w-auto">CALOCOT</div>
       </div>
       <Pulldown
         onChange={pullDropdownChange}

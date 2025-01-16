@@ -136,6 +136,9 @@ const styles = {
     alignItems: "center",
     justifyContent: "center", // ボタンを中央揃え
     marginTop: "40px", // 全体の上余白を調整
+    "@media (max-width: 768px)": {
+      padding: "20px",
+    },
   },
   boxContainer: {
     display: "flex",
@@ -150,6 +153,10 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
     gap: "10px", // 要素間の間隔を設定
+    "@media (max-width: 768px)": {
+      flexDirection: "column",
+      gap: "5px",
+    },
   },
   tabContainer: {
     marginBottom: 5,
@@ -158,6 +165,12 @@ const styles = {
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)", // 通常時のドロップシャドウ
     borderRadius: 10,
     padding: 3,
+    "@media (max-width: 768px)": {
+      width: "95%",
+      marginLeft: "-790px",
+      padding: "10px",
+      borderRadius: 7,
+    },
   },
   button: {
     fontSize: "3em", // 絵文字のサイズを調整
@@ -171,6 +184,10 @@ const styles = {
       backgroundColor: "#FDFDFD", // ホバー時の背景色
       boxShadow: "inset 0 4px 8px rgba(0, 0, 0, 0.5)", // ホバー時のインナーシャドウ
     },
+    "@media (max-width: 768px)": {
+      fontSize: "2em",
+      margin: "5px 10px",
+    },
   },
   content: {
     display: "flex",
@@ -181,12 +198,27 @@ const styles = {
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)", // 通常時のドロップシャドウ
     borderRadius: 10,
     padding: 4,
+    "@media (max-width: 768px)": {
+      width: "90%",
+      margin: "-20px 0px 0px -790px",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "justify",
+      border: "2px solid rgb(127, 127, 127)",
+      backgroundColor: "#F9F9F9",
+      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)", // 通常時のドロップシャドウ
+      padding: 4,
+      borderRadius: 10,
+    },
   },
   text: {
     fontSize: 30,
     fontfamily: "Arial",
     color: "black",
     padding: 2,
+    "@media (max-width: 768px)": {
+      fontSize: "20px",
+    },
   },
 };
 

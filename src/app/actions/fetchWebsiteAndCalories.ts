@@ -1,8 +1,6 @@
 "use server";
 import axios from "axios";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import App from "../page";
-import { Place } from "../types/place";
 
 export async function fetchWebsiteAndCalories(
   restaurant: string,
@@ -16,7 +14,7 @@ export async function fetchWebsiteAndCalories(
       key: process.env.NEXT_PUBLIC_CUSTOM_SEARCH_API_KEY!,
       cx: process.env.NEXT_PUBLIC_CUSTOM_SEARCH_ENGINE_ID!,
     });
-    console.log("queryParams", queryParams);
+
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000);
 
@@ -34,24 +32,16 @@ export async function fetchWebsiteAndCalories(
     }
 
     const searchResponse = await response.json();
-    console.log("searchResponse", searchResponse); // レスポンスを確認
 
     const website = searchResponse?.items?.[0]?.htmlSnippet ?? null; // 安全にアクセス
-
     if (website) {
       const genAI = new GoogleGenerativeAI(
         process.env.NEXT_PUBLIC_GEMINI_API_KEY!
       );
-      console.log("genAI", genAI); //genAI is the instance of the GoogleGenerativeAI class
+
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       const prompt = `content: ${website}, プロンプト: contentを解析して、飲食関連の情報だった場合、得られた情報から一般的な摂取カロリーを予測してください。困難な場合は概算で構いません。そして、カロリーの数字だけを「」で囲み、カロリー数値以外は「」で囲まないでください。例外として、もし飲食関連の情報ではなかった場合は「」で囲み、予測不能と返してください。`;
       const result = await model.generateContent(prompt); //ここから抽出した情報を正規表現でさらに抽出
-      console.log(
-        "result",
-        result.response.candidates?.map(
-          (e) => e.content.parts.map((e) => e.text)[0]
-        )
-      );
 
       const responseText = result.response.candidates
         ?.map((e) => e.content.parts.map((e) => e.text)[0])
@@ -59,7 +49,6 @@ export async function fetchWebsiteAndCalories(
       const match = responseText?.match(/「(.*?)」/);
       const calorieInfo = match ? match[1] : null;
 
-      console.log("calorieInfo", calorieInfo); // 正規表現で抽出した情報を確認
       if (calorieInfo) {
         console.log("Extracted calorie information:", calorieInfo);
         return calorieInfo; // 正規表現で抽出した情報を返す

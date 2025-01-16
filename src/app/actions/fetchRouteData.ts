@@ -1,8 +1,13 @@
 "use server";
+
+import { calculateCalories } from "../../../util/calculateCalories";
+import { translateMode } from "../../../util/translateMode";
+
 export const fetchRouteData = async (
   mode: string,
   originCoords: { latitude: number | null; longitude: number | null },
-  destinationCoords: { latitude: number | null; longitude: number | null }
+  destinationCoords: { latitude: number | null; longitude: number | null },
+  weight: number
 ) => {
   if (
     !originCoords.latitude ||
@@ -13,31 +18,12 @@ export const fetchRouteData = async (
     console.error("座標が取得できませんでした");
     return;
   }
-  console.log("mode", mode);
 
   const origin = `${originCoords.latitude},${originCoords.longitude}`;
-  console.log(origin);
   const destination = `${destinationCoords.latitude},${destinationCoords.longitude}`;
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
-  let mets = 0;
-
-  switch (mode) {
-    case "driving":
-      mets = 1;
-      break;
-    case "walking":
-      mets = 3;
-      break;
-    case "bicycling":
-      mets = 4;
-      mode = "walking";
-      break;
-    case "transit":
-      mets = 2;
-      break;
-    default:
-  }
+  let isBicycling = false;
 
   // 1時間後の出発時刻　ダミー
 
@@ -46,55 +32,44 @@ export const fetchRouteData = async (
     return;
   }
 
+  if (mode === "bicycling") {
+    mode = "walking";
+    isBicycling = true;
+  }
+
   const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&mode=${mode}&key=${apiKey}`;
 
   try {
     const response = await fetch(url);
     const data = await response.json();
+    if (isBicycling) mode = "bicycling";
+
+    mode = translateMode(mode);
 
     if (data.routes.length > 0) {
-      let calories = 0;
-      const leg = data.routes[0].legs[0];
-      const distance = leg.distance.text;
-      let duration = leg.duration.text;
+      const legs = data.routes[0].legs;
+      const legsWithMode = legs.map((leg: any) => ({
+        ...leg,
+        mode,
+      }));
+      const { perCalories, bicyclingTimeHour } = calculateCalories(
+        legsWithMode,
+        weight
+      );
+      const calories = perCalories[0][mode];
+      const distance = legs[0].distance.text;
+      let duration = legs[0].duration.value;
 
-      if (mets == 4) {
-        const cyclingSpeedKmh = 15; // 自転車の速度 (km/h)
-        const reductionSpeedKmh = 4; // 減速分の速度 (km/h)
-
-        const effectiveSpeedKmh = cyclingSpeedKmh - reductionSpeedKmh; // 実効速度 (km/h)
-
-        const bicyclingTimeHour = leg.distance.value / 1000 / effectiveSpeedKmh; // 距離 ÷ 速度
-
-        const totalMinutes = Math.round(bicyclingTimeHour * 60); // 総分数に変換
-
-        const hours = Math.floor(totalMinutes / 60); // 時間
-
-        const minutes = totalMinutes % 60; // 残りの分
-
+      if (mode === "🚲" && bicyclingTimeHour) {
+        const hours = Math.floor(bicyclingTimeHour);
+        const minutes = Math.round((bicyclingTimeHour % 1) * 60);
         duration = `${hours}時間${minutes}分`;
-
-        calories = Math.round(bicyclingTimeHour * mets * 65);
       } else {
-        leg.steps.forEach((step: { duration: { value: number } }) => {
-          const time = step.duration.value / 3600;
-          const totalMinutes = Math.round(time * 60);
-          const hours = Math.floor(totalMinutes / 60);
-          const minutes = totalMinutes % 60;
-          duration = `${hours}時間${minutes}分`;
-          duration;
-          calories += Math.round(mets * 65 * time);
-        });
+        const hours = Math.floor(duration / 3600);
+        const minutes = Math.round((duration % 3600) / 60);
+        duration = `${hours}時間${minutes}分`;
       }
 
-      console.log(
-        "distance",
-        distance,
-        "duration",
-        duration,
-        "calories",
-        calories
-      );
       return { distance, duration, calories };
     } else {
       console.error("ルートが見つかりませんでした");

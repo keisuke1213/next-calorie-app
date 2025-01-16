@@ -1,6 +1,6 @@
 "use server";
 import axios from "axios";
-import { Place } from "../types/place";
+import { Place } from "../types/types";
 
 export async function fetchPlace(searchQuery: string): Promise<Place[]> {
   const key = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;

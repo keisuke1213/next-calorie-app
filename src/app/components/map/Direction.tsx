@@ -156,10 +156,10 @@ const styles = {
   },
   tabContainer: {
     marginBottom: 5,
-    border: "2px solid rgb(127, 127, 127)",
-    backgroundColor: "#F9F9F9",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)", // 通常時のドロップシャドウ
-    borderRadius: 10,
+    // // border: "2px solid rgb(127, 127, 127)",
+    // backgroundColor: "#F9F9F9",
+    // boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)", // 通常時のドロップシャドウ
+    // borderRadius: 10,
     padding: 3,
   },
   button: {

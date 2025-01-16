@@ -35,9 +35,7 @@ export async function fetchWebsiteAndCalories(
 
     const website = searchResponse?.items?.[0]?.htmlSnippet ?? null; // 安全にアクセス
     if (website) {
-      const genAI = new GoogleGenerativeAI(
-        process.env.NEXT_PUBLIC_GEMINI_API_KEY!
-      );
+      const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       const prompt = `content: ${website}, プロンプト: contentを解析して、飲食関連の情報だった場合、得られた情報から一般的な摂取カロリーを予測してください。困難な場合は概算で構いません。そして、カロリーの数字だけを「」で囲み、カロリー数値以外は「」で囲まないでください。例外として、もし飲食関連の情報ではなかった場合は「」で囲み、予測不能と返してください。`;

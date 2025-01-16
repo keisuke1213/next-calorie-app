@@ -38,7 +38,7 @@ export const fetchTransitRouteData = async (
     const queryString = new URLSearchParams(params).toString();
 
     const plan = await fetch(
-      `http://localhost:8080/otp/routers/default/plan?${queryString}`,
+      `http://34.97.5.202:8080/otp/routers/default/plan?${queryString}`,
       {
         method: "GET",
         headers: {
@@ -48,10 +48,12 @@ export const fetchTransitRouteData = async (
     );
 
     const planData = await plan.json();
+    console.log("planData", planData);
 
     const legs = planData.plan.itineraries.map((itinerary: any) =>
       itinerary.legs.flatMap((leg: any) => leg)
     );
+    console.log("legs", legs);
 
     const calculateDuration = (legs: any) => {
       let durationSum = 0;

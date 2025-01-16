@@ -2,29 +2,39 @@
 import React, { FC, useState } from "react";
 import { Box, Typography, Button, Tabs, Tab } from "@mui/material";
 import { fetchRouteData } from "../../actions/fetchRouteData";
+import { fetchTransitRouteData } from "../../actions/fetchTransitRouteData";
+import { PerCalories, TransitRouteData } from "../../types/types";
 
 type GetLocationProps = {
   originCoords: { latitude: number; longitude: number } | null;
   destination: { latitude: number | null; longitude: number | null } | null;
   distance: number | null;
   duration: number | null;
-  calories: number | null;
   intake: string | null;
   setFetchRouteDataResult: (res: any) => void;
+  setPerCalories: (perCalories: PerCalories) => void;
+  perCalories: PerCalories;
+  sumCalories: number | null;
+  setSumCalories: (sumCalories: number) => void;
+  weight: number;
 };
 
 const Direction: FC<GetLocationProps> = ({
   originCoords,
   distance,
   duration,
-  calories,
   destination,
   intake,
   setFetchRouteDataResult,
+  setPerCalories,
+  perCalories,
+  sumCalories,
+  setSumCalories,
+  weight,
 }) => {
   if (!originCoords) return null;
   const [selectedMode, setSelectedMode] = useState("driving");
-  console.log("intake", intake);
+
   const modes = [
     { key: "driving", label: "🚘" },
     { key: "walking", label: "🚶" },
@@ -34,13 +44,35 @@ const Direction: FC<GetLocationProps> = ({
 
   const handleModeChange = async (
     event: React.SyntheticEvent,
-    newValue: string
+    mode: string
   ) => {
-    setSelectedMode(newValue);
+    setPerCalories([]);
+    setSelectedMode(mode);
     if (!destination) return;
-    const res = await fetchRouteData(newValue, originCoords, destination);
-    if (res) {
-      setFetchRouteDataResult(res);
+    if (mode === "transit") {
+      const res = await fetchTransitRouteData(
+        originCoords,
+        destination,
+        weight
+      );
+      console.log("res", res);
+
+      if (res) {
+        const { perCalories, sumCalories } = res;
+        if (perCalories && perCalories.length > 0 && sumCalories) {
+          setPerCalories(perCalories);
+          setSumCalories(sumCalories);
+        }
+      }
+    }
+    const routeData = await fetchRouteData(
+      mode,
+      originCoords,
+      destination,
+      weight
+    );
+    if (routeData) {
+      setFetchRouteDataResult(routeData);
     }
   };
 
@@ -69,8 +101,25 @@ const Direction: FC<GetLocationProps> = ({
           <Typography sx={styles.text}>距離: {distance}</Typography>
           <Typography sx={styles.text}>所要時間: {duration}</Typography>
           <Typography sx={styles.text}>
-            予想消費カロリー: {calories && calories > 0 ? `${calories}kcal` : 0}
+            予想消費カロリー: {sumCalories ? `${sumCalories}kcal` : `0 kcal`}
           </Typography>
+          <Box sx={styles.boxContainer}>
+            {perCalories && perCalories.length > 0 && (
+              <>
+                <Box sx={styles.flexContainer}>
+                  {perCalories.map((data: any, index: number) => {
+                    const key: any = Object.keys(data)[0];
+                    const value = data[key];
+                    return (
+                      <Typography key={index} sx={styles.text}>
+                        {key}: {value}
+                      </Typography>
+                    );
+                  })}
+                </Box>
+              </>
+            )}
+          </Box>
           <Typography sx={styles.text}>
             平均摂取カロリー：{intake ? `${intake}kcal` : 0}
           </Typography>
@@ -87,6 +136,20 @@ const styles = {
     alignItems: "center",
     justifyContent: "center", // ボタンを中央揃え
     marginTop: "40px", // 全体の上余白を調整
+  },
+  boxContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: "10px",
+  },
+  flexContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "10px", // 要素間の間隔を設定
   },
   tabContainer: {
     marginBottom: 5,

@@ -16,10 +16,9 @@ import { useState } from "react";
 import useLocation from "./hooks/useLoction";
 import { fetchWebsiteAndCalories } from "./actions/fetchWebsiteAndCalories";
 import { fetchPlace } from "./actions/fetchPlace";
-import { Place } from "./types/place";
+import { PerCalories, Place } from "./types/types";
 import { CSSProperties } from "react";
 import Header from "./components/header";
-import zIndex from "@mui/material/styles/zIndex";
 
 export default function App() {
   const styles: { [key: string]: CSSProperties } = {
@@ -59,16 +58,6 @@ export default function App() {
       overflowY: "auto",
       zIndex: 1,
     },
-    // element: {
-    //   marginTop: "20px",
-    //   padding: "1px",
-    //   backgroundColor: "#F9F9F9",
-    //   borderRadius: "30px",
-    //   boxShadow: "0 0 10px rgba(16, 16, 16, 0.2)",
-    //   "&:hover": {
-    //     boxShadow: "inset 0 4px 8px rgba(0, 0, 0, 0.2)", // ホバー時のインナーシャドウ
-    //   },
-    // },
     marker: {
       cursor: "pointer",
       backgroundColor: "red",
@@ -104,18 +93,23 @@ export default function App() {
   } | null>(null);
   const [distance, setDistance] = useState<number | null>(null);
   const [duration, setDuration] = useState<number | null>(null);
-  const [calories, setCalories] = useState<number | null>(null);
+  const [sumCalories, setSumCalories] = useState<number | null>(null);
   const [places, setPlaces] = useState<Place[]>([]);
   const [intake, setIntake] = useState<string | null>(null);
+  const [perCalories, setPerCalories] = useState<PerCalories>([]);
+
+  const options = Array.from({ length: 121 }, (_, i) => i + 30);
+  const [weight, setWeight] = useState<number>(options[0]);
 
   const setFetchRouteDataResult = (res: any) => {
     const { distance, duration, calories } = res;
     setDistance(distance);
     setDuration(duration);
-    setCalories(calories);
+    setSumCalories(calories);
   };
 
   const handleSubmit = async (formData: FormData): Promise<void> => {
+    setPerCalories([]);
     setDuration(null);
     setDistance(null);
     const origin = formData.get("origin") as string;
@@ -138,7 +132,8 @@ export default function App() {
       const res = await fetchRouteData(
         "driving",
         originCoords,
-        destinationCoords
+        destinationCoords,
+        weight
       );
       if (res) {
         setFetchRouteDataResult(res);
@@ -156,9 +151,19 @@ export default function App() {
     destination,
     distance,
     duration,
-    calories,
+    sumCalories,
+    setSumCalories,
     intake,
     setFetchRouteDataResult,
+    perCalories,
+    setPerCalories,
+    weight,
+  };
+
+  const headerProps = {
+    weight,
+    setWeight,
+    options,
   };
 
   const showMapProps = {
@@ -169,7 +174,7 @@ export default function App() {
   console.log("intake", intake);
   return (
     <Box sx={styles.container}>
-      <Header />
+      <Header {...headerProps} />
       <ShowMap {...showMapProps} />
       <Box sx={styles.overlay}>
         <InputLocation {...getLocationProps} />
@@ -188,7 +193,7 @@ export default function App() {
                     borderRadius: "30px",
                     boxShadow: "0 0 10px rgba(16, 16, 16, 0.2)",
                     "&:hover": {
-                      boxShadow: "inset 0 4px 8px rgba(0, 0, 0, 0.2)", // ホバー時のインナーシャドウ
+                      boxShadow: "inset 0 4px 8px rgba(0, 0, 0, 0.2)",
                     },
                   }}
                   key={index}
@@ -211,6 +216,3 @@ export default function App() {
     </Box>
   );
 }
-
-//ベースカラー
-// #F9F9F9

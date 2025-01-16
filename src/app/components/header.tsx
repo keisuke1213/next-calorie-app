@@ -1,10 +1,17 @@
 "use client";
 import Pulldown from "./pulldown";
+import { FC } from "react";
 
 interface NavLink {
   href: string;
   label: string;
 }
+
+type HeaderProps = {
+  weight: number;
+  setWeight: (weight: number) => void;
+  options: number[];
+};
 
 const navLinks: NavLink[] = [
   { href: "/", label: "Home" },
@@ -12,9 +19,9 @@ const navLinks: NavLink[] = [
   { href: "/contact", label: "Contact" },
 ];
 
-const Header: React.FC = () => {
+const Header: FC<HeaderProps> = ({ weight, setWeight, options }) => {
   const pullDropdownChange = (value: number) => {
-    console.log("選択された値:", value);
+    setWeight(value);
   };
   return (
     <header className="bg-[#EF7042] text-white pt-3 pb-0">
@@ -38,6 +45,9 @@ const Header: React.FC = () => {
       <Pulldown
         onChange={pullDropdownChange}
         style={{ left: "500px", width: "50px" }}
+        weight={weight}
+        setWeight={setWeight}
+        options = {options}
       />
     </header>
   );

@@ -23,13 +23,13 @@ import Header from "./components/header";
 export default function App() {
   const styles: { [key: string]: CSSProperties } = {
     container: {
-      position: "relative" as "relative",
+      position: "relative" as const,
       width: "100vw",
       height: "100vh",
       backgroundColor: "#F5F5F5",
     },
     map: {
-      position: "absolute" as "absolute",
+      position: "absolute" as const,
       height: "80%",
       top: 110,
       left: 50,
@@ -39,7 +39,7 @@ export default function App() {
       boxShadow: "0 4px 8px rgba(0, 0, 0, 1)", // 通常時のドロップシャドウ
     },
     overlay: {
-      position: "absolute" as "absolute", // マップ上に配置
+      position: "absolute" as const, // マップ上に配置
       top: -22, // 必要に応じて位置調整
       left: 400,
       bottom: 0,
@@ -74,7 +74,7 @@ export default function App() {
       padding: "10px",
       borderRadius: "5px",
       boxShadow: "0 0 10px rgba(236, 38, 38, 0.1)",
-      position: "absolute" as "absolute",
+      position: "absolute" as const,
       bottom: "10px",
       left: "10px",
       zIndex: 2,

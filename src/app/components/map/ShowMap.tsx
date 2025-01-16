@@ -30,14 +30,14 @@ const ShowMap: FC<ShowMapProps> = ({ originCoords, style, destination }) => {
           mapContainerStyle={containerStyle}
           center={center}
           zoom={17}
-          sx={{
-            flex: 1,
-            height: "50%",
-            top: 110,
-            left: 50,
-            right: 0,
-            bottom: 0,
-          }}
+          // sx={{
+          //   flex: 1,
+          //   height: "50%",
+          //   top: 110,
+          //   left: 50,
+          //   right: 0,
+          //   bottom: 0,
+          // }}
         >
           <Marker
             position={{

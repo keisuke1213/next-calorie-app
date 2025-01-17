@@ -39,9 +39,9 @@ export default function App() {
     } as CSSProperties,
     map: {
       position: "absolute" as const,
-      height: "80%",
-      top: 110,
-      left: 50,
+      height: "70%",
+      top: 120,
+      left: 80,
       right: 0,
       bottom: 0, // 画面全体を埋めるスタイル
       borderRadius: "30px",
@@ -64,11 +64,18 @@ export default function App() {
       bottom: 0,
       right: -390,
       padding: 2,
-    },
+      "@media (maxWidth: 768px)": {
+        top: -220, // 必要に応じて位置調整
+        left: 400,
+        bottom: 0,
+        right: -390,
+        padding: 2,
+      },
+    }  as CSSProperties,
     result: {
       position: "absolute" as const,
-      top: 110,
-      left: 150,
+      top: 100,
+      left: 475,
       marginTop: "5px",
       marginLeft: "auto",
       marginRight: "auto",
@@ -80,11 +87,13 @@ export default function App() {
       boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
       cursor: "pointer",
       maxHeight: "500px",
-      // overflowY: "auto",
+      overflowY: "auto",
       zIndex: 1,
       "@media (max-width: 768px)": {
-        top: 200,
-        left: 50,
+        top: 70,
+        right: 10,
+        bottom:0,
+        left: 10,
         width: "300px",
         margin: "auto",
         padding: "20px",
@@ -240,10 +249,10 @@ export default function App() {
             {places.map((place, index) => (
               <Card
                 sx={{
-                  margin: "10px, auto, 0 ,auto",
+                  margin: "0px auto 20px auto",
                   padding: "1px",
                   backgroundColor: "#F9F9F9",
-                  borderRadius: "30px",
+                  borderRadius: "20px",
                   boxShadow: "0 0 10px rgba(16, 16, 16, 0.2)",
                   "&:hover": {
                     boxShadow: "inset 0 4px 8px rgba(0, 0, 0, 0.2)",
@@ -259,9 +268,9 @@ export default function App() {
                   <Typography variant="h5" component="div">
                     {place.name}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  {/* <Typography variant="body2" color="text.secondary">
                     {place.website || "Fetching details..."}
-                  </Typography>
+                  </Typography> */}
                 </CardContent>
               </Card>
             ))}

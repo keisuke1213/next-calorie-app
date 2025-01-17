@@ -15,6 +15,25 @@ export const modeIntoNumber = (mode: string) => {
   }
 };
 
+const switchMetsByoccupancyStatus = (occupancyStatus: number): number => {
+  switch (occupancyStatus) {
+    case 0: // 空車
+      return 1.2;
+    case 1: // 多くの座席が利用可能
+      return 1.3;
+    case 2: // 少しの座席が利用可能
+      return 1.5;
+    case 3: // 立席のみ利用可能
+      return 2.0;
+    case 4: // 非常に混雑（圧迫状態）
+      return 2.5;
+    case 5: // 満席または満員
+      return 2.8;
+    default: // 不明または計算外
+      return 0;
+  }
+};
+
 type leg = {
   distance:
     | {
@@ -29,6 +48,7 @@ type leg = {
       }
     | number;
   mode: string;
+  occupancyStatus?: number;
 }[];
 
 const caluculateBicyclingCalories = (
@@ -76,7 +96,12 @@ export const calculateCalories = (leg: leg, weight: number) => {
       perCalories.push({ [l.mode]: cal });
       return { perCalories, sumCalories, bicyclingTimeHour };
     } else {
-      const mets = modeIntoNumber(l.mode);
+      let mets = modeIntoNumber(l.mode);
+      console.log("mets", mets);
+      if (l.occupancyStatus) {
+        mets = switchMetsByoccupancyStatus(l.occupancyStatus);
+        console.log("mets1", mets);
+      }
 
       const durationValue =
         typeof l.duration === "number" ? l.duration : l.duration.value;

@@ -138,9 +138,9 @@ const styles = {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center", // ボタンを中央揃え
-    marginTop: "40px", // 全体の上余白を調整
-    "@media (max-width: 768px)": {
-      padding: "20px",
+    marginTop: "50px", // 全体の上余白を調整
+    "@media (max-width: 600px)": {
+      marginTop: "5px", // 画面幅が600px以下の場合の上余白を調整
     },
   },
   boxContainer: {
@@ -148,17 +148,22 @@ const styles = {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: "10px",
+    margin: "10px, 0, 0, 30px",
   },
   flexContainer: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: "10px", // 要素間の間隔を設定
-    "@media (max-width: 768px)": {
-      flexDirection: "column",
-      gap: "5px",
+    gap: "8px", // 要素間の間隔を設
+    "@media (max-width: 600px)": {},
+    "@media (min-width: 601px) and (max-width: 960px)": {
+      flexDirection: "row", // 画面幅が601pxから960pxの場合に横方向に変更
+      gap: "8px", // 要素間の間隔を調整
+    },
+    "@media (min-width: 961px)": {
+      flexDirection: "row", // 画面幅が961px以上の場合に横方向に変更
+      gap: "13px", // 要素間の間隔を調整
     },
   },
   tabContainer: {
@@ -167,13 +172,7 @@ const styles = {
     // backgroundColor: "#F9F9F9",
     // boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)", // 通常時のドロップシャドウ
     // borderRadius: 10,
-    padding: 3,
-    "@media (max-width: 768px)": {
-      width: "95%",
-      marginLeft: "-790px",
-      padding: "10px",
-      borderRadius: 7,
-    },
+    padding: 1, //
   },
   button: {
     fontSize: "3em", // 絵文字のサイズを調整
@@ -187,9 +186,11 @@ const styles = {
       backgroundColor: "#FDFDFD", // ホバー時の背景色
       boxShadow: "inset 0 4px 8px rgba(0, 0, 0, 0.5)", // ホバー時のインナーシャドウ
     },
-    "@media (max-width: 768px)": {
-      fontSize: "2em",
-      margin: "5px 10px",
+    "@media (max-width: 600px)": {
+      fontSize: "1.5em", // 画面幅が600px以下の場合の絵文字のサイズを調整
+      // padding: "0.2px 0.2px", // 画面幅が600px以下の場合のボタンの余白を調整
+      borderRadius: "15px", // 画面幅が600px以下の場合のボタンの丸みを調整
+      margin: "0px 3px", // 画面幅が600px以下の場合のボタンの間隔を調整
     },
   },
   content: {
@@ -201,17 +202,11 @@ const styles = {
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)", // 通常時のドロップシャドウ
     borderRadius: 10,
     padding: 4,
-    "@media (max-width: 768px)": {
-      width: "90%",
-      margin: "-20px 0px 0px -790px",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "justify",
-      border: "2px solid rgb(127, 127, 127)",
-      backgroundColor: "#F9F9F9",
-      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)", // 通常時のドロップシャドウ
-      padding: 4,
-      borderRadius: 10,
+    "@media (max-width: 600px)": {
+      padding: 2,
+      width: "330px",
+      marginBotton: "80px",
+      margin: 0,
     },
   },
   text: {

@@ -25,5 +25,5 @@ body {
   height: 100vh;
   margin: 0;
   padding: 0 0 100px 0;
-  overflow: hidden; /* 必要に応じてスクロールバーを非表示にする */
+  /* overflow: hidden; 必要に応じてスクロールバーを非表示にする */
 }

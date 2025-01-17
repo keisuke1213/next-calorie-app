@@ -234,41 +234,40 @@ export default function App() {
         </Grid2>
       </Grid2>
 
-        <Stack sx={{ width: "fit-content" }}>
-          {places && places.length > 0 && (
-            <Box sx={styles.result}>
-              {places.map((place, index) => (
-                <Card
-                  sx={{
-                    marginTop: "20px",
-                    padding: "1px",
-                    backgroundColor: "#F9F9F9",
-                    borderRadius: "30px",
-                    boxShadow: "0 0 10px rgba(16, 16, 16, 0.2)",
-                    "&:hover": {
-                      boxShadow: "inset 0 4px 8px rgba(0, 0, 0, 0.2)",
-                    },
-                    "@media (max-width: 768px)": {
-                      width: "100%",
-                    },
-                  }}
-                  key={index}
-                  onClick={() => handleMarkerPress(place)}
-                >
-                  <CardContent>
-                    <Typography variant="h5" component="div">
-                      {place.name}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {place.website || "Fetching details..."}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              ))}
-            </Box>
-          )}
-        </Stack>
-      </Box>
+      <Stack sx={{ width: "fit-content" }}>
+        {places && places.length > 0 && (
+          <Box sx={styles.result}>
+            {places.map((place, index) => (
+              <Card
+                sx={{
+                  marginTop: "20px",
+                  padding: "1px",
+                  backgroundColor: "#F9F9F9",
+                  borderRadius: "30px",
+                  boxShadow: "0 0 10px rgba(16, 16, 16, 0.2)",
+                  "&:hover": {
+                    boxShadow: "inset 0 4px 8px rgba(0, 0, 0, 0.2)",
+                  },
+                  "@media (max-width: 768px)": {
+                    width: "100%",
+                  },
+                }}
+                key={index}
+                onClick={() => handleMarkerPress(place)}
+              >
+                <CardContent>
+                  <Typography variant="h5" component="div">
+                    {place.name}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {place.website || "Fetching details..."}
+                  </Typography>
+                </CardContent>
+              </Card>
+            ))}
+          </Box>
+        )}
+      </Stack>
     </Box>
   );
 }

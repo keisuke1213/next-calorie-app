@@ -43,8 +43,8 @@ const Header: FC<HeaderProps> = ({
               },
             }}
           >
-            <div className="text-5xl font-bold text-center md:text-left ps-3">
-              CALOCOT
+            <div className="text-4xl font-bold text-center md:text-left ps-3">
+              CALOCULATE
             </div>
             <Box
               sx={{

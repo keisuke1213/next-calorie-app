@@ -140,7 +140,7 @@ const styles = {
     justifyContent: "center", // ボタンを中央揃え
     marginTop: "50px", // 全体の上余白を調整
     "@media (max-width: 600px)": {
-      marginTop: "5px", // 画面幅が600px以下の場合の上余白を調整
+      marginTop: "2px", // 画面幅が600px以下の場合の上余白を調整
     },
   },
   boxContainer: {
@@ -168,35 +168,34 @@ const styles = {
   },
   tabContainer: {
     marginBottom: 5,
-    border: "2px solid rgb(127, 127, 127)",
-    backgroundColor: "#F9F9F9",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)", // 通常時のドロップシャドウ
-    borderRadius: 10,
-    padding: 2, //
+    display: "flex",
+    flexWrap: "wrap",
+    padding: 1,
     "@media (max-width: 600px)": {
-      border: "none",
-      backgroundColor: "#F5F5F5",
-      boxShadow: "none",
+      marginBottom: 3,
+      width: "95%",
     },
   },
   button: {
-    fontSize: "3em", // 絵文字のサイズを調整
-    margin: "0px 20px", // ボタンの間隔を調整
+    fontSize: "1.5em", // 絵文字のサイズを調整
+    margin: "0px 10px", // ボタンの間隔を調整
     padding: "10px 20px", // ボタンの余白を調整
     borderRadius: "20px", // ボタンに丸みを追加
     backgroundColor: "#F9F9F9", // ボタンの背景色
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)", // 通常時のドロップシャドウ
     transition: "box-shadow 0.3s ease", // なめらかな切り替え
+    flex: "1 0 auto",
     "&:hover": {
       backgroundColor: "#FDFDFD", // ホバー時の背景色
       boxShadow: "inset 0 4px 8px rgba(0, 0, 0, 0.5)", // ホバー時のインナーシャドウ
     },
     "@media (max-width: 600px)": {
-      width: "10%",
-      fontSize: "1.5em", // 画面幅が600px以下の場合の絵文字のサイズを調整
-      // padding: "0.2px 0.2px", // 画面幅が600px以下の場合のボタンの余白を調整
-      borderRadius: "15px", // 画面幅が600px以下の場合のボタンの丸みを調整
+      width: "10px",
+      fontSize: "1em", // 画面幅が600px以下の場合の絵文字のサイズを調整
+      borderRadius: "10px", // 画面幅が600px以下の場合のボタンの丸みを調整
       margin: "0px 3px", // 画面幅が600px以下の場合のボタンの間隔を調整
+      padding: "0", // ボタンの余白を調整
+      backgroundColor: "inherit", // 画面幅が600px以下の場合のボタンの背景色を無効化
     },
   },
   content: {
@@ -211,13 +210,13 @@ const styles = {
     "@media (max-width: 600px)": {
       padding: 2,
       width: "330px",
-      marginBotton: "80px",
+      marginBottom: "80px",
       margin: 0,
     },
   },
   text: {
     fontSize: 30,
-    fontfamily: "Arial",
+    fontFamily: "Arial",
     color: "black",
     padding: 2,
     "@media (max-width: 768px)": {

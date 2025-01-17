@@ -1,7 +1,8 @@
 import React, { FC } from "react";
 import Grid from "@mui/material/Grid";
-import InputLocation from "./InputLocation";
+import InputLocation from "../header/InputLocation";
 import Pulldown from "./pulldown";
+import { Box } from "@mui/material";
 
 type HeaderProps = {
   weight: number;
@@ -27,11 +28,39 @@ const Header: FC<HeaderProps> = ({
     <header className="bg-[#EF7042] text-white mt-2">
       <div className="container mx-auto flex items-center h-full py-4">
         <Grid container spacing={2} alignItems="center">
-          {/* Logo */}
-          <Grid item xs={12} md={6} lg={3}>
-            <div className="text-5xl font-bold text-center md:text-left">
+          {/* Logo and Pulldown */}
+          <Grid
+            item
+            xs={12}
+            md={6}
+            lg={3}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: {
+                xs: "space-between", // xsの時にロゴとプルダウンを左右に配置
+                md: "flex-start", // md以上の時に左揃え
+              },
+            }}
+          >
+            <div className="text-5xl font-bold text-center md:text-left ps-3">
               CALOCOT
             </div>
+            <Box
+              sx={{
+                display: {
+                  xs: "block", // xsの時に表示
+                  md: "none", // md以上の時に非表示
+                },
+              }}
+            >
+              <Pulldown
+                onChange={pullDropdownChange}
+                weight={weight}
+                setWeight={setWeight}
+                options={options}
+              />
+            </Box>
           </Grid>
 
           {/* InputLocation */}
@@ -50,16 +79,18 @@ const Header: FC<HeaderProps> = ({
             <InputLocation {...getLocationProps} />
           </Grid>
 
-          {/* Pulldown */}
+          {/* Pulldown for larger screens */}
           <Grid
             item
             xs={12}
             md={4}
             lg={1}
             sx={{
-              display: "flex",
+              display: {
+                xs: "none", // xsの時に非表示
+                md: "flex", // md以上の時に表示
+              },
               justifyContent: {
-                xs: "flex-end", // xsの時に右端に配置
                 md: "center", // md以上の時に中央に配置
               },
               mx: "auto",
@@ -71,7 +102,6 @@ const Header: FC<HeaderProps> = ({
               weight={weight}
               setWeight={setWeight}
               options={options}
-              style={{ width: "100%" }}
             />
           </Grid>
         </Grid>

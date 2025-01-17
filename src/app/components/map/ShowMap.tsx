@@ -12,8 +12,12 @@ type ShowMapProps = {
 const ShowMap: FC<ShowMapProps> = ({ originCoords, style, destination }) => {
   if (!originCoords) return null;
   const containerStyle = {
-    width: "50%",
+    width: "45%",
+    height: "10%",
     ...style,
+    marginTop: "50px",
+    marginBottom: "70px",
+    padding: "50px, 0",
   };
 
   const center = {
@@ -22,7 +26,7 @@ const ShowMap: FC<ShowMapProps> = ({ originCoords, style, destination }) => {
   };
 
   return (
-    <Box sx={{ flex: 1 }}>
+    <Box sx={{ flex: 1, mt: 5, pt: 5 }}>
       <LoadScript
         googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}
       >

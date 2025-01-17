@@ -23,7 +23,7 @@ const useLocation = () => {
         },
         (error) => {
           alert("位置情報の取得に失敗しました。");
-          console.error(error);
+          console.error(error.message);
         }
       );
     };

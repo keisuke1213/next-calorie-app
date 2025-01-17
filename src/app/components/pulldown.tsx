@@ -29,9 +29,9 @@ const Pulldown: FC<PulldownProps> = ({ weight, setWeight, options }) => {
         fontSize: "32px",
         border: "1px solid rgb(120, 120, 120)",
         borderRadius: "10px",
-        position: "relative",
-        top: "-68px",
-        left: "1200px",
+        // position: "relative",
+        // top: "-68px",
+        // left: "1200px",
         zIndex: 1,
       }}
     >

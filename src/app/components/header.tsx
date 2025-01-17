@@ -1,54 +1,81 @@
-"use client";
+import React, { FC } from "react";
+import Grid from "@mui/material/Grid";
+import InputLocation from "./map/InputLocation";
 import Pulldown from "./pulldown";
-import { FC } from "react";
-
-interface NavLink {
-  href: string;
-  label: string;
-}
 
 type HeaderProps = {
   weight: number;
-  setWeight: (weight: number) => void;
+  setWeight: (value: number) => void;
   options: number[];
+  getLocationProps: {
+    originCoords: { latitude: number; longitude: number } | null;
+    handleSubmit: (formData: FormData) => Promise<void>;
+  };
 };
 
-const navLinks: NavLink[] = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
-];
-
-const Header: FC<HeaderProps> = ({ weight, setWeight, options }) => {
+const Header: FC<HeaderProps> = ({
+  weight,
+  setWeight,
+  options,
+  getLocationProps,
+}) => {
   const pullDropdownChange = (value: number) => {
     setWeight(value);
   };
-  return (
-    <header className="bg-[#EF7042] text-white pt-3 pb-0">
-      <div className="container mx-auto flex items-center justify-between py-4 px-6">
-        {/* Logo */}
-        <div className="text-5xl font-bold -ml-20 pl-10 ">CALOCOT</div>
 
-        {/* Navigation */}
-        <nav>
-          <ul className="flex space-x-6">
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                {/* <Link href={link.href}>
-                  <a className="hover:text-gray-300">{link.label}</a>
-                </Link> */}
-              </li>
-            ))}
-          </ul>
-        </nav>
+  return (
+    <header className="bg-[#EF7042] text-white">
+      <div className="container mx-auto flex items-center h-full py-4">
+        <Grid container spacing={2} alignItems="center">
+          {/* Logo */}
+          <Grid item xs={12} md={6} lg={3}>
+            <div className="text-5xl font-bold text-center md:text-left">
+              CALOCOT
+            </div>
+          </Grid>
+
+          {/* InputLocation */}
+          <Grid
+            item
+            xs={12}
+            md={8}
+            lg={7}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100%",
+            }}
+          >
+            <InputLocation {...getLocationProps} />
+          </Grid>
+
+          {/* Pulldown */}
+          <Grid
+            item
+            xs={12}
+            md={4}
+            lg={1}
+            sx={{
+              display: "flex",
+              justifyContent: {
+                xs: "flex-end", // xsの時に右端に配置
+                md: "center", // md以上の時に中央に配置
+              },
+              mx: "auto",
+              px: "auto",
+            }}
+          >
+            <Pulldown
+              onChange={pullDropdownChange}
+              weight={weight}
+              setWeight={setWeight}
+              options={options}
+              style={{ width: "100%" }}
+            />
+          </Grid>
+        </Grid>
       </div>
-      <Pulldown
-        onChange={pullDropdownChange}
-        style={{ left: "500px", width: "50px" }}
-        weight={weight}
-        setWeight={setWeight}
-        options = {options}
-      />
     </header>
   );
 };

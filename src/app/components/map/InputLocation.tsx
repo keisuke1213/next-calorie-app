@@ -7,6 +7,57 @@ type GetLocationProps = {
   handleSubmit: (formData: FormData) => Promise<void>;
 };
 
+const styles = {
+  container: {
+    display: "flex",
+    alignItems: "center",
+  },
+  input: {
+    backgroundColor: "white",
+    height: "50px",
+    width: "300px", // デフォルトの幅を100%に設定
+    borderRadius: "40px",
+    boxShadow: "inset 0 4px 8px rgba(0, 0, 0, 0.2)",
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        border: "none", // 境界線を消す
+      },
+    },
+    "@media (min-width: 600px)": {
+      width: "400px", // 画面幅が600px以上の場合の幅を500pxに設定
+    },
+    "@media (min-width: 960px)": {
+      width: "550px", // 画面幅が960px以上の場合の幅を670pxに設定
+    },
+  },
+  button: {
+    margin: "10px", // ボタンとテキストボックスの間隔を調整
+    minWidth: "40px", // ボタンの最小幅を設定（ボタンが小さくなるのを防ぐ）
+    // width: "60px", // デフォルトの幅を設定
+    height: "40px", // デフォルトの高さを設定
+    borderRadius: "20px", // 必要に応じて角を丸く（高さの半分に設定）
+    fontSize: "16px", // デフォルトのフォントサイズを指定
+    backgroundColor: "#8AE2FF", // 背景色を指定
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)", // 通常時のドロップシャドウ
+    transition: "box-shadow 0.3s ease", // なめらかな切り替え
+    "&:hover": {
+      boxShadow: "inset 0 4px 8px rgba(0, 0, 0, 0.5)", // ホバー時のインナーシャドウ
+    },
+    "@media (min-width: 600px)": {
+      width: "120px", // 画面幅が600px以上の場合の幅を120pxに設定
+      height: "50px", // 画面幅が600px以上の場合の高さを50pxに設定
+      fontSize: "18px", // 画面幅が600px以上の場合のフォントサイズを18pxに設定
+      borderRadius: "25px", // 画面幅が600px以上の場合の角を丸く（高さの半分に設定）
+    },
+    "@media (min-width: 960px)": {
+      width: "150px", // 画面幅が960px以上の場合の幅を150pxに設定
+      height: "60px", // 画面幅が960px以上の場合の高さを60pxに設定
+      fontSize: "20px", // 画面幅が960px以上の場合のフォントサイズを20pxに設定
+      borderRadius: "30px", // 画面幅が960px以上の場合の角を丸く（高さの半分に設定）
+    },
+  },
+};
+
 const InputLocation: FC<GetLocationProps> = ({
   originCoords,
   handleSubmit,
@@ -18,60 +69,18 @@ const InputLocation: FC<GetLocationProps> = ({
         variant="outlined"
         name="destination"
         placeholder="　目的地を入力"
-        sx={{
-          ...styles.input,
-          backgroundColor: "white",
-          height: "50px",
-          width: "670px",
-          marginLeft: "-30px",
-          borderRadius: "40px",
-          boxShadow: "inset 0 4px 8px rgba(0, 0, 0, 0.2)",
-          "& .MuiOutlinedInput-root": {
-            "& fieldset": {
-              border: "none", // 境界線を消す
-            },
-          },
-        }}
+        sx={styles.input}
       />
-
       <Button
         type="submit"
         variant="contained"
         color="primary"
-        sx={{
-          width: "75px", // 横幅を指定
-          height: "50px", // 高さを指定
-          marginLeft: "655px", // ボタンとテキストボックスの間隔を調整
-          marginTop: "-67px", // ボタンとテキストボックスの間隔を調整
-          marginBottom: "-22px", 
-          minWidth: "50px", // ボタンの最小幅を設定（ボタンが小さくなるのを防ぐ）
-          borderRadius: "40px", // 必要に応じて角を丸く
-          fontSize: "30px", // フォントサイズを指定
-          backgroundColor: "#8AE2FF", // 背景色を指定
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)", // 通常時のドロップシャドウ
-          transition: "box-shadow 0.3s ease", // なめらかな切り替え
-          "&:hover": {
-            boxShadow: "inset 0 4px 8px rgba(0, 0, 0, 0.5)", // ホバー時のインナーシャドウ
-          },
-        }}
+        sx={styles.button}
       >
-        🔍
+        検索
       </Button>
     </Box>
   );
-};
-
-const styles = {
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    padding: 2,
-    marginTop: 2,
-  },
-  input: {
-    marginBottom: 2,
-  },
 };
 
 export default InputLocation;

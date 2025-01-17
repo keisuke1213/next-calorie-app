@@ -138,21 +138,33 @@ const styles = {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center", // ボタンを中央揃え
-    marginTop: "40px", // 全体の上余白を調整
+    marginTop: "50px", // 全体の上余白を調整
+    "@media (max-width: 600px)": {
+      marginTop: "5px", // 画面幅が600px以下の場合の上余白を調整
+    },
   },
   boxContainer: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: "10px",
+    margin: "10px, 0, 0, 30px",
   },
   flexContainer: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: "10px", // 要素間の間隔を設定
+    gap: "8px", // 要素間の間隔を設
+    "@media (max-width: 600px)": {},
+    "@media (min-width: 601px) and (max-width: 960px)": {
+      flexDirection: "row", // 画面幅が601pxから960pxの場合に横方向に変更
+      gap: "8px", // 要素間の間隔を調整
+    },
+    "@media (min-width: 961px)": {
+      flexDirection: "row", // 画面幅が961px以上の場合に横方向に変更
+      gap: "13px", // 要素間の間隔を調整
+    },
   },
   tabContainer: {
     marginBottom: 5,
@@ -160,7 +172,7 @@ const styles = {
     // backgroundColor: "#F9F9F9",
     // boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)", // 通常時のドロップシャドウ
     // borderRadius: 10,
-    padding: 3,
+    padding: 1, //
   },
   button: {
     fontSize: "3em", // 絵文字のサイズを調整
@@ -174,6 +186,12 @@ const styles = {
       backgroundColor: "#FDFDFD", // ホバー時の背景色
       boxShadow: "inset 0 4px 8px rgba(0, 0, 0, 0.5)", // ホバー時のインナーシャドウ
     },
+    "@media (max-width: 600px)": {
+      fontSize: "2em", // 画面幅が600px以下の場合の絵文字のサイズを調整
+      padding: "2px 2px", // 画面幅が600px以下の場合のボタンの余白を調整
+      borderRadius: "15px", // 画面幅が600px以下の場合のボタンの丸みを調整
+      margin: "0px 5px", // 画面幅が600px以下の場合のボタンの間隔を調整
+    },
   },
   content: {
     display: "flex",
@@ -184,6 +202,11 @@ const styles = {
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)", // 通常時のドロップシャドウ
     borderRadius: 10,
     padding: 4,
+    "@media (max-width: 600px)": {
+      padding: 2,
+      width: "365px",
+      margin: 0,
+    },
   },
   text: {
     fontSize: 30,

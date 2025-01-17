@@ -6,6 +6,7 @@ import {
   Button,
   Card,
   CardContent,
+  Grid2,
   Stack,
   Typography,
 } from "@mui/material";
@@ -25,7 +26,7 @@ export default function App() {
     container: {
       position: "relative" as const,
       width: "100vw",
-      height: "100vh",
+      height: "100%",
       backgroundColor: "#F5F5F5",
     },
     map: {
@@ -169,6 +170,7 @@ export default function App() {
     weight,
     setWeight,
     options,
+    getLocationProps,
   };
 
   const showMapProps = {
@@ -193,44 +195,44 @@ export default function App() {
   return (
     <Box sx={styles.container}>
       <Header {...headerProps} />
-      {!isMobile && <ShowMap {...showMapProps} />}
-      <Box sx={styles.overlay}>
-        <InputLocation {...getLocationProps} />
+      <Grid2 container spacing={4} alignItems="center">
+        <Grid2 size={6}>{!isMobile && <ShowMap {...showMapProps} />}</Grid2>
+        <Grid2 size={{ lg: 6, md: 12 }} sx={{ mx: "auto" }}>
+          <Direction {...directionProps} />
+        </Grid2>
+      </Grid2>
 
-        <Direction {...directionProps} />
-
-        <Stack sx={{ width: "fit-content" }}>
-          {places && places.length > 0 && (
-            <Box sx={styles.result}>
-              {places.map((place, index) => (
-                <Card
-                  sx={{
-                    marginTop: "20px",
-                    padding: "1px",
-                    backgroundColor: "#F9F9F9",
-                    borderRadius: "30px",
-                    boxShadow: "0 0 10px rgba(16, 16, 16, 0.2)",
-                    "&:hover": {
-                      boxShadow: "inset 0 4px 8px rgba(0, 0, 0, 0.2)",
-                    },
-                  }}
-                  key={index}
-                  onClick={() => handleMarkerPress(place)}
-                >
-                  <CardContent>
-                    <Typography variant="h5" component="div">
-                      {place.name}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {place.website || "Fetching details..."}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              ))}
-            </Box>
-          )}
-        </Stack>
-      </Box>
+      <Stack sx={{ width: "fit-content" }}>
+        {places && places.length > 0 && (
+          <Box sx={styles.result}>
+            {places.map((place, index) => (
+              <Card
+                sx={{
+                  marginTop: "20px",
+                  padding: "1px",
+                  backgroundColor: "#F9F9F9",
+                  borderRadius: "30px",
+                  boxShadow: "0 0 10px rgba(16, 16, 16, 0.2)",
+                  "&:hover": {
+                    boxShadow: "inset 0 4px 8px rgba(0, 0, 0, 0.2)",
+                  },
+                }}
+                key={index}
+                onClick={() => handleMarkerPress(place)}
+              >
+                <CardContent>
+                  <Typography variant="h5" component="div">
+                    {place.name}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {place.website || "Fetching details..."}
+                  </Typography>
+                </CardContent>
+              </Card>
+            ))}
+          </Box>
+        )}
+      </Stack>
     </Box>
   );
 }

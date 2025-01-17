@@ -168,11 +168,16 @@ const styles = {
   },
   tabContainer: {
     marginBottom: 5,
-    // // border: "2px solid rgb(127, 127, 127)",
-    // backgroundColor: "#F9F9F9",
-    // boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)", // 通常時のドロップシャドウ
-    // borderRadius: 10,
-    padding: 1, //
+    border: "2px solid rgb(127, 127, 127)",
+    backgroundColor: "#F9F9F9",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)", // 通常時のドロップシャドウ
+    borderRadius: 10,
+    padding: 2, //
+    "@media (max-width: 600px)": {
+      border: "none",
+      backgroundColor: "#F5F5F5",
+      boxShadow: "none",
+    },
   },
   button: {
     fontSize: "3em", // 絵文字のサイズを調整
@@ -187,6 +192,7 @@ const styles = {
       boxShadow: "inset 0 4px 8px rgba(0, 0, 0, 0.5)", // ホバー時のインナーシャドウ
     },
     "@media (max-width: 600px)": {
+      width: "10%",
       fontSize: "1.5em", // 画面幅が600px以下の場合の絵文字のサイズを調整
       // padding: "0.2px 0.2px", // 画面幅が600px以下の場合のボタンの余白を調整
       borderRadius: "15px", // 画面幅が600px以下の場合のボタンの丸みを調整

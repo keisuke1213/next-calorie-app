@@ -28,7 +28,15 @@ export default function App() {
       width: "100vw",
       height: "100%",
       backgroundColor: "#F5F5F5",
-    },
+      overflowX: "hidden",
+      "@media (maxWidth: 768px)": {
+        // position: "relative" as "relative",
+        // width: "100vw",
+        // height: "100vh",
+        // backgroundColor: "#F5F5F5",
+        overflowX: "hidden",
+      },
+    } as CSSProperties,
     map: {
       position: "absolute" as const,
       height: "80%",
@@ -38,7 +46,17 @@ export default function App() {
       bottom: 0, // 画面全体を埋めるスタイル
       borderRadius: "30px",
       boxShadow: "0 4px 8px rgba(0, 0, 0, 1)", // 通常時のドロップシャドウ
-    },
+      "@media (maxWidth: 768px)": {
+        // position: "absolute" as "absolute",
+        // height: "50%",
+        // top: 110,
+        // left: 50,
+        // right: 0,
+        // bottom: 0, // 画面全体を埋めるスタイル
+        borderRadius: "30px",
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 1)", // 通常時のドロップシャドウ
+      },
+    } as CSSProperties,
     overlay: {
       position: "absolute" as const, // マップ上に配置
       top: -22, // 必要に応じて位置調整
@@ -48,7 +66,7 @@ export default function App() {
       padding: 2,
     },
     result: {
-      margin: "-540px -100px 0px 0px",
+      margin: "-580px -100px 0px -10px",
       padding: "20px",
       backgroundColor: "#FDFDFD",
       border: "3px solid rgb(133, 231, 244)",
@@ -58,7 +76,21 @@ export default function App() {
       maxHeight: "500px",
       overflowY: "auto",
       zIndex: 1,
-    },
+      "@media (max-width: 768px)": {
+        width: "323px",
+        marginTop: "-495px",
+        marginLeft: "-368px",
+        padding: "20px",
+        backgroundColor: "#FDFDFD",
+        border: "3px solid rgb(133, 231, 244)",
+        borderRadius: "30px",
+        boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
+        cursor: "pointer",
+        maxHeight: "400px",
+        overflowY: "auto",
+        zIndex: 1,
+      },
+    } as CSSProperties,
     marker: {
       cursor: "pointer",
       backgroundColor: "red",
@@ -202,37 +234,41 @@ export default function App() {
         </Grid2>
       </Grid2>
 
-      <Stack sx={{ width: "fit-content" }}>
-        {places && places.length > 0 && (
-          <Box sx={styles.result}>
-            {places.map((place, index) => (
-              <Card
-                sx={{
-                  marginTop: "20px",
-                  padding: "1px",
-                  backgroundColor: "#F9F9F9",
-                  borderRadius: "30px",
-                  boxShadow: "0 0 10px rgba(16, 16, 16, 0.2)",
-                  "&:hover": {
-                    boxShadow: "inset 0 4px 8px rgba(0, 0, 0, 0.2)",
-                  },
-                }}
-                key={index}
-                onClick={() => handleMarkerPress(place)}
-              >
-                <CardContent>
-                  <Typography variant="h5" component="div">
-                    {place.name}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {place.website || "Fetching details..."}
-                  </Typography>
-                </CardContent>
-              </Card>
-            ))}
-          </Box>
-        )}
-      </Stack>
+        <Stack sx={{ width: "fit-content" }}>
+          {places && places.length > 0 && (
+            <Box sx={styles.result}>
+              {places.map((place, index) => (
+                <Card
+                  sx={{
+                    marginTop: "20px",
+                    padding: "1px",
+                    backgroundColor: "#F9F9F9",
+                    borderRadius: "30px",
+                    boxShadow: "0 0 10px rgba(16, 16, 16, 0.2)",
+                    "&:hover": {
+                      boxShadow: "inset 0 4px 8px rgba(0, 0, 0, 0.2)",
+                    },
+                    "@media (max-width: 768px)": {
+                      width: "100%",
+                    },
+                  }}
+                  key={index}
+                  onClick={() => handleMarkerPress(place)}
+                >
+                  <CardContent>
+                    <Typography variant="h5" component="div">
+                      {place.name}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {place.website || "Fetching details..."}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              ))}
+            </Box>
+          )}
+        </Stack>
+      </Box>
     </Box>
   );
 }

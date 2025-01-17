@@ -213,6 +213,9 @@ const styles = {
     fontfamily: "Arial",
     color: "black",
     padding: 2,
+    "@media (max-width: 768px)": {
+      fontSize: "20px",
+    },
   },
 };
 

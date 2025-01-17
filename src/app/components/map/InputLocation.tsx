@@ -63,7 +63,17 @@ const InputLocation: FC<GetLocationProps> = ({
   handleSubmit,
 }) => {
   return (
-    <Box component="form" action={handleSubmit} sx={styles.container}>
+    <Box
+      component="form"
+      action={handleSubmit}
+      sx={{
+        ...styles.container,
+        "@media (max-width: 768px)": {
+          flexDirection: "column",
+          padding: 1,
+        },
+      }}
+    >
       <TextField
         fullWidth
         variant="outlined"

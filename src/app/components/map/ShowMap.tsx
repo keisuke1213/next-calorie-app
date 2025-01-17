@@ -30,7 +30,19 @@ const ShowMap: FC<ShowMapProps> = ({ originCoords, style, destination }) => {
       <LoadScript
         googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}
       >
-        <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={17}>
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={center}
+          zoom={17}
+          // sx={{
+          //   flex: 1,
+          //   height: "50%",
+          //   top: 110,
+          //   left: 50,
+          //   right: 0,
+          //   bottom: 0,
+          // }}
+        >
           <Marker
             position={{
               lat: originCoords?.latitude,

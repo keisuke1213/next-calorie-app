@@ -187,10 +187,10 @@ const styles = {
       boxShadow: "inset 0 4px 8px rgba(0, 0, 0, 0.5)", // ホバー時のインナーシャドウ
     },
     "@media (max-width: 600px)": {
-      fontSize: "2em", // 画面幅が600px以下の場合の絵文字のサイズを調整
-      padding: "2px 2px", // 画面幅が600px以下の場合のボタンの余白を調整
+      fontSize: "1.5em", // 画面幅が600px以下の場合の絵文字のサイズを調整
+      // padding: "0.2px 0.2px", // 画面幅が600px以下の場合のボタンの余白を調整
       borderRadius: "15px", // 画面幅が600px以下の場合のボタンの丸みを調整
-      margin: "0px 5px", // 画面幅が600px以下の場合のボタンの間隔を調整
+      margin: "0px 3px", // 画面幅が600px以下の場合のボタンの間隔を調整
     },
   },
   content: {
@@ -204,7 +204,8 @@ const styles = {
     padding: 4,
     "@media (max-width: 600px)": {
       padding: 2,
-      width: "365px",
+      width: "330px",
+      marginBotton: "80px",
       margin: 0,
     },
   },

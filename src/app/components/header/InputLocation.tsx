@@ -29,6 +29,9 @@ const styles = {
     "@media (min-width: 960px)": {
       width: "550px", // 画面幅が960px以上の場合の幅を670pxに設定
     },
+    "@media (max-width: 600px)": {
+      width: "200px", // 画面幅が768px以下の場合の幅を100%に設定
+    },
   },
   button: {
     margin: "10px", // ボタンとテキストボックスの間隔を調整
@@ -69,7 +72,7 @@ const InputLocation: FC<GetLocationProps> = ({
       sx={{
         ...styles.container,
         "@media (max-width: 768px)": {
-          flexDirection: "column",
+          display: "flex",
           padding: 1,
         },
       }}

@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import Grid from "@mui/material/Grid";
-import InputLocation from "./map/InputLocation";
+import InputLocation from "./InputLocation";
 import Pulldown from "./pulldown";
 
 type HeaderProps = {
@@ -24,7 +24,7 @@ const Header: FC<HeaderProps> = ({
   };
 
   return (
-    <header className="bg-[#EF7042] text-white">
+    <header className="bg-[#EF7042] text-white mt-2">
       <div className="container mx-auto flex items-center h-full py-4">
         <Grid container spacing={2} alignItems="center">
           {/* Logo */}

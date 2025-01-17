@@ -58,3 +58,4 @@ const Pulldown: FC<PulldownProps> = ({ weight, setWeight, options }) => {
 };
 
 export default Pulldown;
+//　プルダウンメニュー

@@ -23,7 +23,8 @@
 html,
 body {
   height: 100%;
-  margin: 0;
-  padding: 0;
+  /* margin: 0;
+  padding: 0; */
+  padding-bottom: 100px;
   overflow: hidden; /* 必要に応じてスクロールバーを非表示にする */
 }

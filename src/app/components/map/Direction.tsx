@@ -173,7 +173,7 @@ const styles = {
     padding: 1,
     "@media (max-width: 600px)": {
       marginBottom: 3,
-      width: "90%",
+      width: "95%",
     },
   },
   button: {

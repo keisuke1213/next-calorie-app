@@ -26,7 +26,7 @@ export default function App() {
     container: {
       position: "relative" as const,
       width: "100vw",
-      height: "100%",
+      height: "100vh",
       backgroundColor: "#F5F5F5",
       overflowX: "hidden",
       "@media (maxWidth: 768px)": {
@@ -72,7 +72,7 @@ export default function App() {
         right: -390,
         padding: 2,
       },
-    }  as CSSProperties,
+    } as CSSProperties,
     result: {
       position: "absolute" as const,
       top: 100,
@@ -93,7 +93,7 @@ export default function App() {
       "@media (max-width: 768px)": {
         top: 70,
         right: 10,
-        bottom:0,
+        bottom: 0,
         left: 10,
         width: "300px",
         margin: "auto",

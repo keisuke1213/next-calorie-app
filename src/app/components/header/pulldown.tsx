@@ -1,46 +1,42 @@
-"use client";
-import { useState } from "react";
-import { FC } from "react";
+import React, { FC } from "react";
+import {
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  SelectChangeEvent,
+} from "@mui/material";
+import { styled } from "@mui/system";
 
-interface PulldownProps {
-  onChange?: (value: number) => void; // onChangeは任意プロパティ
-  style?: React.CSSProperties;
-  weight?: number;
+type PulldownProps = {
+  weight: number;
   setWeight: (weight: number) => void;
   options: number[];
-}
+  onChange: (value: number) => void;
+};
 
 const Pulldown: FC<PulldownProps> = ({ weight, setWeight, options }) => {
-  // 30から150までの整数リストを生成
-
-  // 選択時の処理
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChange = (event: SelectChangeEvent<number>) => {
     setWeight(Number(event.target.value));
   };
 
   return (
-    <select
-      value={weight}
-      onChange={handleChange}
-      style={{
-        fontFamily: "Arial, sans-serif",
-        color: "black",
-        padding: "7px",
-        fontSize: "32px",
-        border: "1px solid rgb(120, 120, 120)",
-        borderRadius: "10px",
-        // position: "relative",
-        // top: "-68px",
-        // left: "1200px",
-        zIndex: 1,
-      }}
-    >
-      {options.map((value) => (
-        <option key={value} value={value}>
-          {value}kg
-        </option>
-      ))}
-    </select>
+    <FormControl variant="outlined" sx={{ mr: { xs: 2 } }}>
+      <InputLabel id="weight-select-label">体重設定</InputLabel>
+      <Select
+        labelId="weight-select-label"
+        value={weight}
+        onChange={handleChange}
+        label="Weight"
+        sx={{ width: 100 }}
+      >
+        {options.map((value) => (
+          <MenuItem key={value} value={value}>
+            {value}kg
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   );
 };
 

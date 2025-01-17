@@ -73,6 +73,7 @@ export const fetchTransitRouteData = async (
     const legs = planData.plan.itineraries.map((itinerary: any) =>
       itinerary.legs.flatMap((leg: any) => leg)
     );
+    console.log("legs", legs);
 
     const transitRouteData = calculateDuration(legs);
     // console.log("transitRouteData", transitRouteData);
@@ -92,8 +93,6 @@ export const fetchTransitRouteData = async (
             realtime.stopId === leg.to.stopId
         );
 
-        console.log("matchingRealtimeData", matchingRealtimeData);
-
         // リアルタイム情報を統合
         if (matchingRealtimeData) {
           return {
@@ -106,7 +105,7 @@ export const fetchTransitRouteData = async (
       return leg;
     });
 
-    console.log("enrichedRouteData", enrichedRouteData);
+    // console.log("enrichedRouteData", enrichedRouteData);
 
     return calculateCalories(enrichedRouteData, weight);
   } catch (error) {

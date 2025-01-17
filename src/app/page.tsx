@@ -35,6 +35,7 @@ export default function App() {
         // height: "100vh",
         // backgroundColor: "#F5F5F5",
         overflowX: "hidden",
+        marginBottom: "80px",
       },
     } as CSSProperties,
     map: {

@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import Grid from "@mui/material/Grid";
-import InputLocation from "./InputLocation";
+import InputLocation from "../header/InputLocation";
 import Pulldown from "./pulldown";
 
 type HeaderProps = {
@@ -71,7 +71,6 @@ const Header: FC<HeaderProps> = ({
               weight={weight}
               setWeight={setWeight}
               options={options}
-              style={{ width: "100%" }}
             />
           </Grid>
         </Grid>

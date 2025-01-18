@@ -22,13 +22,23 @@ const Pulldown: FC<PulldownProps> = ({ weight, setWeight, options }) => {
 
   return (
     <FormControl variant="outlined" sx={{ mr: { xs: 2 } }}>
-      <InputLabel id="weight-select-label">体重設定</InputLabel>
+      <InputLabel
+        style={{
+          marginTop: "0px",
+          marginLeft: "0px",
+          color: "black",
+          fontSize: "23px",
+          fontWeight: "bold",
+        }}
+        id="weight-select-label"
+      >体重設定
+      </InputLabel>
       <Select
         labelId="weight-select-label"
         value={weight}
         onChange={handleChange}
         label="Weight"
-        sx={{ width: 100 }}
+        sx={{ width: 100, color: "black",fontSize:"24px", }}
       >
         {options.map((value) => (
           <MenuItem key={value} value={value}>

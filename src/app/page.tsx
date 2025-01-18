@@ -134,6 +134,9 @@ export default function App() {
       fontSize: "1.2em",
     },
   };
+  type FromTo = {
+    [key: string]: string;
+  }[];
 
   const { originCoords } = useLocation();
 
@@ -149,9 +152,12 @@ export default function App() {
   const [perCalories, setPerCalories] = useState<PerCalories>([]);
   const [selectedMode, setSelectedMode] = useState("driving");
   const [isMobile, setIsMobile] = useState(false);
+  const [combinedData, setCombinedData] = useState<any[]>([]);
+  const [submitTrriger, setSubmitTrriger] = useState(false);
 
   const options = Array.from({ length: 121 }, (_, i) => i + 30);
   const [weight, setWeight] = useState<number>(options[0]);
+  const [fromTo, setFromTo] = useState<FromTo | undefined>(undefined);
 
   const setFetchRouteDataResult = (res: any) => {
     const { distance, duration, calories } = res;
@@ -213,6 +219,11 @@ export default function App() {
     weight,
     selectedMode,
     setSelectedMode,
+    combinedData,
+    setCombinedData,
+    submitTrriger,
+    fromTo,
+    setFromTo,
   };
 
   const headerProps = {

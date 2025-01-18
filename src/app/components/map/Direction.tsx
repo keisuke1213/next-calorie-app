@@ -151,7 +151,7 @@ const Direction: FC<GetLocationProps> = ({
                   Object.keys(data)[0] === "Origin"
                     ? (fromToKey = "出発地")
                     : (fromToKey = Object.keys(data)[0]);
-                  let perCaloriesKey = Object.keys(data)[1];
+                  const perCaloriesKey = Object.keys(data)[1];
                   const perCaloriesValue = data[perCaloriesKey];
                   return (
                     <Box key={index} sx={styles.flexItem}>

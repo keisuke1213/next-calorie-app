@@ -21,6 +21,11 @@ type GetLocationProps = {
   setSelectedMode: (mode: string) => void;
 };
 
+// type FromTo = {
+//   start: string;
+//   end: string;
+// }[];
+
 const Direction: FC<GetLocationProps> = ({
   originCoords,
   distance,
@@ -37,6 +42,7 @@ const Direction: FC<GetLocationProps> = ({
   selectedMode,
 }) => {
   if (!originCoords) return null;
+  // const [fromTo, setFromTo] = useState<FromTo | undefined>(undefined);
 
   const modes = [
     { key: "driving", label: "🚘" },
@@ -60,14 +66,29 @@ const Direction: FC<GetLocationProps> = ({
       );
       console.log("res", res);
 
-      if (res) {
-        const { perCalories, sumCalories } = res;
+      const calories = res?.calories;
+
+      if (calories) {
+        const { perCalories, sumCalories } = calories;
         if (perCalories && perCalories.length > 0 && sumCalories) {
           setPerCalories(perCalories);
           setSumCalories(sumCalories);
         }
       }
+
+      // const startAndEnd = res?.startAndEnd;
+      // console.log("startAndEnd", startAndEnd);
+      // if (startAndEnd) {
+      //   const newFromTo: FromTo = startAndEnd.map(
+      //     (data: { start: string; end: string }) => ({
+      //       start: data.start,
+      //       end: data.end,
+      //     })
+      //   );
+      //   setFromTo(newFromTo);
     }
+
+    // console.log("fromTo", fromTo);
     const routeData = await fetchRouteData(
       mode,
       originCoords,
@@ -107,6 +128,19 @@ const Direction: FC<GetLocationProps> = ({
             予想消費カロリー: {sumCalories ? `${sumCalories}kcal` : `0 kcal`}
           </Typography>
           <Box sx={styles.boxContainer}>
+            {/* {fromTo && fromTo.length > 0 && (
+              <>
+                <Box sx={styles.flexContainer}>
+                  {fromTo.map((data: any, index: number) => {
+                    return (
+                      <Typography key={index} sx={styles.text}>
+                        {data.start} → {data.end}
+                      </Typography>
+                    );
+                  })}
+                </Box>
+              </>
+            )} */}
             {perCalories && perCalories.length > 0 && (
               <>
                 <Box sx={styles.flexContainer}>
@@ -116,6 +150,7 @@ const Direction: FC<GetLocationProps> = ({
                     return (
                       <Typography key={index} sx={styles.text}>
                         {key}: {value}
+                        <span className="">kcal</span>
                       </Typography>
                     );
                   })}

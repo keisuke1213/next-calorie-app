@@ -134,6 +134,9 @@ export default function App() {
       fontSize: "1.2em",
     },
   };
+  type FromTo = {
+    [key: string]: string;
+  }[];
 
   const { originCoords } = useLocation();
 
@@ -149,6 +152,7 @@ export default function App() {
   const [perCalories, setPerCalories] = useState<PerCalories>([]);
   const [selectedMode, setSelectedMode] = useState("driving");
   const [isMobile, setIsMobile] = useState(false);
+  const [combinedData, setCombinedData] = useState<any[]>([]);
 
   const options = Array.from({ length: 121 }, (_, i) => i + 30);
   const [weight, setWeight] = useState<number>(options[0]);
@@ -161,6 +165,7 @@ export default function App() {
   };
 
   const handleSubmit = async (formData: FormData): Promise<void> => {
+    setCombinedData([]);
     setPerCalories([]);
     setDuration(null);
     setDistance(null);
@@ -213,6 +218,8 @@ export default function App() {
     weight,
     selectedMode,
     setSelectedMode,
+    combinedData,
+    setCombinedData,
   };
 
   const headerProps = {

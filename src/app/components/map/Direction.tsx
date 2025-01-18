@@ -1,5 +1,5 @@
 "use client";
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import { Box, Typography, Button, Tabs, Tab } from "@mui/material";
 import { fetchRouteData } from "../../actions/fetchRouteData";
 import { fetchTransitRouteData } from "../../actions/fetchTransitRouteData";
@@ -19,12 +19,13 @@ type GetLocationProps = {
   weight: number;
   selectedMode: string;
   setSelectedMode: (mode: string) => void;
+  combinedData: any[];
+  setCombinedData: (data: any[]) => void;
 };
 
-// type FromTo = {
-//   start: string;
-//   end: string;
-// }[];
+type FromTo = {
+  [key: string]: string;
+}[];
 
 const Direction: FC<GetLocationProps> = ({
   originCoords,
@@ -40,9 +41,11 @@ const Direction: FC<GetLocationProps> = ({
   weight,
   setSelectedMode,
   selectedMode,
+  combinedData,
+  setCombinedData,
 }) => {
   if (!originCoords) return null;
-  // const [fromTo, setFromTo] = useState<FromTo | undefined>(undefined);
+  const [fromTo, setFromTo] = useState<FromTo | undefined>(undefined);
 
   const modes = [
     { key: "driving", label: "🚘" },
@@ -55,6 +58,8 @@ const Direction: FC<GetLocationProps> = ({
     event: React.SyntheticEvent,
     mode: string
   ) => {
+    setFromTo(undefined);
+    setCombinedData([]);
     setPerCalories([]);
     setSelectedMode(mode);
     if (!destination) return;
@@ -76,16 +81,11 @@ const Direction: FC<GetLocationProps> = ({
         }
       }
 
-      // const startAndEnd = res?.startAndEnd;
-      // console.log("startAndEnd", startAndEnd);
-      // if (startAndEnd) {
-      //   const newFromTo: FromTo = startAndEnd.map(
-      //     (data: { start: string; end: string }) => ({
-      //       start: data.start,
-      //       end: data.end,
-      //     })
-      //   );
-      //   setFromTo(newFromTo);
+      const startAndEnd = res?.startAndEnd;
+      console.log("startAndEnd", startAndEnd);
+      if (startAndEnd) {
+        setFromTo(startAndEnd);
+      }
     }
 
     // console.log("fromTo", fromTo);
@@ -99,6 +99,16 @@ const Direction: FC<GetLocationProps> = ({
       setFetchRouteDataResult(routeData);
     }
   };
+
+  useEffect(() => {
+    if (fromTo && perCalories) {
+      const combined = fromTo.map((data, index) => ({
+        ...data,
+        ...perCalories[index],
+      }));
+      setCombinedData(combined);
+    }
+  }, [fromTo, perCalories]);
 
   return (
     <Box>
@@ -128,39 +138,35 @@ const Direction: FC<GetLocationProps> = ({
             予想消費カロリー: {sumCalories ? `${sumCalories}kcal` : `0 kcal`}
           </Typography>
           <Box sx={styles.boxContainer}>
-            {/* {fromTo && fromTo.length > 0 && (
-              <>
-                <Box sx={styles.flexContainer}>
-                  {fromTo.map((data: any, index: number) => {
-                    return (
-                      <Typography key={index} sx={styles.text}>
-                        {data.start} → {data.end}
+            {combinedData && combinedData.length > 0 && (
+              <Box sx={styles.flexContainer}>
+                {combinedData.map((data: any, index: number) => {
+                  let fromToKey = Object.keys(data)[0];
+                  let fromToValue = data[fromToKey];
+                  if (data[fromToKey] === "Destination") fromToValue = "目的地";
+                  Object.keys(data)[0] === "Origin"
+                    ? (fromToKey = "出発地")
+                    : (fromToKey = Object.keys(data)[0]);
+                  let perCaloriesKey = Object.keys(data)[1];
+                  const perCaloriesValue = data[perCaloriesKey];
+                  return (
+                    <Box key={index} sx={styles.flexItem}>
+                      <Typography sx={{ fontSize: "10px" }}>
+                        {fromToKey} → {fromToValue}
                       </Typography>
-                    );
-                  })}
-                </Box>
-              </>
-            )} */}
-            {perCalories && perCalories.length > 0 && (
-              <>
-                <Box sx={styles.flexContainer}>
-                  {perCalories.map((data: any, index: number) => {
-                    const key: any = Object.keys(data)[0];
-                    const value = data[key];
-                    return (
-                      <Typography key={index} sx={styles.text}>
-                        {key}
-                        <span className=" text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl">
-                          {value}
+                      <Typography sx={styles.text}>
+                        {perCaloriesKey}
+                        <span className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl">
+                          {perCaloriesValue}
                         </span>
-                        <span className="text-sm  md:text-base lg:text-lg xl:text-xl">
+                        <span className="text-sm md:text-base lg:text-lg xl:text-xl">
                           kcal
                         </span>
                       </Typography>
-                    );
-                  })}
-                </Box>
-              </>
+                    </Box>
+                  );
+                })}
+              </Box>
             )}
           </Box>
           <Typography sx={styles.text}>
@@ -192,19 +198,28 @@ const styles = {
   },
   flexContainer: {
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     gap: "8px", // 要素間の間隔を設
-    "@media (max-width: 600px)": {},
+    "@media (max-width: 600px)": {
+      gap: "2px", // 画面幅が600px以下の場合の要素間の間隔を調整
+    },
     "@media (min-width: 601px) and (max-width: 960px)": {
-      flexDirection: "row", // 画面幅が601pxから960pxの場合に横方向に変更
+      flexDirection: "", // 画面幅が601pxから960pxの場合に横方向に変更
       gap: "8px", // 要素間の間隔を調整
     },
     "@media (min-width: 961px)": {
       flexDirection: "row", // 画面幅が961px以上の場合に横方向に変更
       gap: "13px", // 要素間の間隔を調整
     },
+  },
+  flexItem: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: "0 10px",
   },
   tabContainer: {
     marginBottom: 5,

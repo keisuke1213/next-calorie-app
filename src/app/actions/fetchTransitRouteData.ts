@@ -99,18 +99,15 @@ export const fetchTransitRouteData = async (
     const maxDuration = calcurateMaxDuration(legs);
 
     type StartAndEnd = {
-      start: string;
-      end: string;
+      [key: string]: string;
     }[];
 
     const startAndEnd: StartAndEnd = [];
-    legs.forEach((leg: any) => {
-      leg.forEach((l: any) => {
-        if (l.mode === "🚌") {
-          startAndEnd.push(l.from.name, l.to.name);
-        }
-      });
+
+    minDuration.forEach((l: any) => {
+      startAndEnd.push({ [l.from.name]: l.to.name });
     });
+
     console.log("startAndEnd", startAndEnd);
 
     const normalizeTripId = (tripId: string) => tripId?.split(":").pop();

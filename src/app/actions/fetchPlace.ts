@@ -4,10 +4,9 @@ import { Place } from "../types/types";
 
 export async function fetchPlace(searchQuery: string): Promise<Place[]> {
   const key = process.env.GOOGLE_MAPS_API_KEY;
-  console.log("key", key);
   try {
     const { data } = await axios.get(
-      `https://maps.googleapis.com/maps/api/place/textsearch/json?key=${key}&query=${searchQuery}`
+      `https://maps.googleapis.com/maps/api/place/textsearch/json?key=${key}&query=${searchQuery}&language=ja`
     );
 
     const fetchedPlaces: Place[] = data.results.map((place: any) => ({

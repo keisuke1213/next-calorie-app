@@ -105,13 +105,12 @@ const Direction: FC<GetLocationProps> = ({
   };
   useEffect(() => {
     setCombinedData([]);
-    if (fromTo && perCalories) {
-      const combined = fromTo.map((data, index) => ({
-        ...data,
-        ...perCalories[index],
-      }));
-      setCombinedData(combined);
-    }
+
+    const combined = fromTo?.map((data, index) => ({
+      ...data,
+      ...perCalories![index],
+    }));
+    setCombinedData(combined!);
   }, [fromTo, perCalories]);
 
   return (

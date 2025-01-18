@@ -41,7 +41,7 @@ export const fetchBusRealtimeData = async (params: {
     const busDataMap = new Map();
     feed.entity.forEach((entity) => {
       const vehicle = entity.vehicle;
-      console.log("vehicle", vehicle);
+      // console.log("vehicle", vehicle);
       if (vehicle) {
         const trip = vehicle.trip; // trip情報を取得
         const vehicleDescriptor = vehicle.vehicle;
@@ -66,7 +66,7 @@ export const fetchAndParseGTFS = async () => {
   console.log("fetchAndParseGTFS");
   const res = await fetch("http://34.97.5.202/otp/routers/default/index/stops");
   const stops = await res.json();
-  console.log("stops", stops);
+  // console.log("stops", stops);
   // // GTFSデータの取得
   // const url = `https://api.odpt.org/api/v4/files/odpt/KyotoMunicipalTransportation/Kyoto_City_Subway_GTFS.zip?date=20240815&acl:consumerKey=${key}`;
   // const response = await fetch(url);

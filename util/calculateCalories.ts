@@ -8,7 +8,7 @@ export const modeIntoNumber = (mode: string) => {
       return 3;
     case "🚲":
       return 4;
-    case "🚃":
+    case "🚌":
       return 2;
     default:
       return 0;
@@ -47,6 +47,7 @@ type leg = {
         value: number;
       }
     | number;
+
   mode: string;
   occupancyStatus?: number;
 }[];
@@ -83,6 +84,7 @@ const caluculateBicyclingCalories = (
 };
 
 export const calculateCalories = (leg: leg, weight: number) => {
+  console.log("cal leg", leg);
   console.log("weight", weight);
   const perCalories: PerCalories = [];
 
@@ -90,12 +92,14 @@ export const calculateCalories = (leg: leg, weight: number) => {
 
   for (const l of leg) {
     let calories = 0;
+
     if (l.mode === "🚲") {
       const { cal, sumCalories, bicyclingTimeHour } =
         caluculateBicyclingCalories(l, weight);
       perCalories.push({ [l.mode]: cal });
       return { perCalories, sumCalories, bicyclingTimeHour };
     } else {
+      console.log("l.mode", l.mode);
       let mets = modeIntoNumber(l.mode);
       console.log("mets", mets);
       if (l.occupancyStatus) {
@@ -113,6 +117,7 @@ export const calculateCalories = (leg: leg, weight: number) => {
       perCalories.push({ [l.mode]: calories });
     }
   }
+  console.log("perCalories", perCalories);
 
   return { perCalories, sumCalories };
 };

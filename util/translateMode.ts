@@ -1,4 +1,4 @@
-export const translateMode = (mode: string) : string => {
+export const translateMode = (mode: string): string => {
   switch (mode) {
     case "DRIVING":
     case "driving":
@@ -11,7 +11,7 @@ export const translateMode = (mode: string) : string => {
       return "🚲";
     case "BUS":
     case "SUBWAY":
-      return "🚃";
+      return "🚌";
     default:
       return "";
   }

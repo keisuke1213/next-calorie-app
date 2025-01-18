@@ -167,7 +167,6 @@ export default function App() {
   };
 
   const handleSubmit = async (formData: FormData): Promise<void> => {
-    setCombinedData([]);
     setPerCalories([]);
     setDuration(null);
     setDistance(null);
@@ -178,7 +177,6 @@ export default function App() {
   };
 
   const handleMarkerPress = async (place: Place) => {
-    setCombinedData([]);
     setSelectedMode("driving");
     setPlaces([]);
     const destinationCoords = await fetchCoordinatesByName(place.name);

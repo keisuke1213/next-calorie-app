@@ -49,6 +49,15 @@ const Direction: FC<GetLocationProps> = ({
   submitTrriger,
 }) => {
   const [fromTo, setFromTo] = useState<FromTo | undefined>(undefined);
+  useEffect(() => {
+    setCombinedData([]);
+
+    const combined = fromTo?.map((data, index) => ({
+      ...data,
+      ...perCalories![index],
+    }));
+    setCombinedData(combined!);
+  }, [fromTo, perCalories, setCombinedData]);
   if (!originCoords) return null;
 
   const modes = [
@@ -103,16 +112,6 @@ const Direction: FC<GetLocationProps> = ({
       setFetchRouteDataResult(routeData);
     }
   };
-
-  useEffect(() => {
-    setCombinedData([]);
-
-    const combined = fromTo?.map((data, index) => ({
-      ...data,
-      ...perCalories![index],
-    }));
-    setCombinedData(combined!);
-  }, [fromTo, perCalories, setCombinedData]);
 
   return (
     <Box>

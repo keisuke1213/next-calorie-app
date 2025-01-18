@@ -21,6 +21,9 @@ type GetLocationProps = {
   setSelectedMode: (mode: string) => void;
   combinedData: any[];
   setCombinedData: (data: any[]) => void;
+  submitTrriger: boolean;
+  fromTo: FromTo | undefined;
+  setFromTo: (fromTo: FromTo) => void;
 };
 
 type FromTo = {
@@ -43,6 +46,7 @@ const Direction: FC<GetLocationProps> = ({
   selectedMode,
   combinedData,
   setCombinedData,
+  submitTrriger,
 }) => {
   if (!originCoords) return null;
   const [fromTo, setFromTo] = useState<FromTo | undefined>(undefined);
@@ -99,8 +103,8 @@ const Direction: FC<GetLocationProps> = ({
       setFetchRouteDataResult(routeData);
     }
   };
-
   useEffect(() => {
+    setCombinedData([]);
     if (fromTo && perCalories) {
       const combined = fromTo.map((data, index) => ({
         ...data,
@@ -151,9 +155,11 @@ const Direction: FC<GetLocationProps> = ({
                   const perCaloriesValue = data[perCaloriesKey];
                   return (
                     <Box key={index} sx={styles.flexItem}>
-                      <Typography sx={{ fontSize: "10px" }}>
-                        {fromToKey} → {fromToValue}
-                      </Typography>
+                      {combinedData.length > 1 && (
+                        <Typography sx={{ fontSize: "10px" }}>
+                          {fromToKey} → {fromToValue}
+                        </Typography>
+                      )}
                       <Typography sx={styles.text}>
                         {perCaloriesKey}
                         <span className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl">

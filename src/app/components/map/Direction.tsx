@@ -48,8 +48,8 @@ const Direction: FC<GetLocationProps> = ({
   setCombinedData,
   submitTrriger,
 }) => {
-  if (!originCoords) return null;
   const [fromTo, setFromTo] = useState<FromTo | undefined>(undefined);
+  if (!originCoords) return null;
 
   const modes = [
     { key: "driving", label: "🚘" },
@@ -103,6 +103,7 @@ const Direction: FC<GetLocationProps> = ({
       setFetchRouteDataResult(routeData);
     }
   };
+
   useEffect(() => {
     setCombinedData([]);
 
@@ -111,7 +112,7 @@ const Direction: FC<GetLocationProps> = ({
       ...perCalories![index],
     }));
     setCombinedData(combined!);
-  }, [fromTo, perCalories]);
+  }, [fromTo, perCalories, setCombinedData]);
 
   return (
     <Box>

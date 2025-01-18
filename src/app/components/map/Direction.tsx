@@ -149,8 +149,13 @@ const Direction: FC<GetLocationProps> = ({
                     const value = data[key];
                     return (
                       <Typography key={index} sx={styles.text}>
-                        {key}: {value}
-                        <span className="">kcal</span>
+                        {key}
+                        <span className=" text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl">
+                          {value}
+                        </span>
+                        <span className="text-sm  md:text-base lg:text-lg xl:text-xl">
+                          kcal
+                        </span>
                       </Typography>
                     );
                   })}

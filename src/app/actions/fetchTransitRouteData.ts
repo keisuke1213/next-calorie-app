@@ -98,11 +98,26 @@ export const fetchTransitRouteData = async (
     const minDuration = calculateMinDuration(legs);
     const maxDuration = calcurateMaxDuration(legs);
 
+    type StartAndEnd = {
+      start: string;
+      end: string;
+    }[];
+
+    const startAndEnd: StartAndEnd = [];
+    legs.forEach((leg: any) => {
+      leg.forEach((l: any) => {
+        if (l.mode === "🚌") {
+          startAndEnd.push(l.from.name, l.to.name);
+        }
+      });
+    });
+    console.log("startAndEnd", startAndEnd);
+
     const normalizeTripId = (tripId: string) => tripId?.split(":").pop();
     const normalizeRouteId = (routeId: string) => routeId?.split(":").pop();
 
     const enrichedRouteData = minDuration.map((leg: any) => {
-      if (leg.mode === "🚃") {
+      if (leg.mode === "🚌") {
         // リアルタイムデータから一致する運行情報を取得
         const matchingRealtimeData = Array.from(busRealtimeData.values()).find(
           (realtime) =>
@@ -127,7 +142,8 @@ export const fetchTransitRouteData = async (
 
     // console.log("enrichedRouteData", enrichedRouteData);
 
-    return calculateCalories(enrichedRouteData, weight);
+    const calories = calculateCalories(enrichedRouteData, weight);
+    return { calories, startAndEnd };
   } catch (error) {
     console.error("リアルタイム情報の取得に失敗しました", error);
     return;

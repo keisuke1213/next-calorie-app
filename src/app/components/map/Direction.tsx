@@ -42,7 +42,7 @@ const Direction: FC<GetLocationProps> = ({
     { key: "driving", label: "🚘" },
     { key: "walking", label: "🚶" },
     { key: "bicycling", label: "🚲" },
-    { key: "transit", label: "🚃" },
+    { key: "transit", label: "🚌" },
   ];
 
   const handleModeChange = async (
@@ -206,7 +206,7 @@ const styles = {
     backgroundColor: "#F9F9F9",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)", // 通常時のドロップシャドウ
     borderRadius: 10,
-    padding: 4,
+    padding: "4",
     "@media (max-width: 600px)": {
       padding: 2,
       width: "330px",

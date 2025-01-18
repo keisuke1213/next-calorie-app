@@ -4,9 +4,31 @@ import { calculateCalories } from "../../../util/calculateCalories";
 import { translateMode } from "../../../util/translateMode";
 import { fetchBusRealtimeData } from "./fetchGtfs";
 
-const calculateDuration = (legs: any) => {
+const calculateMinDuration = (legs: any) => {
   let durationSum = 0;
   let result = 1000000000;
+  let legIndex = 0;
+  const translatedLegs = legs.map((leg: any) =>
+    leg.map((l: any) => ({
+      ...l,
+      mode: translateMode(l.mode),
+    }))
+  );
+
+  translatedLegs.forEach((leg: any, index: number) => {
+    durationSum = leg.reduce((sum: number, l: any) => sum + l.duration, 0);
+    if (durationSum < result) {
+      result = durationSum;
+      legIndex = index;
+    }
+  });
+
+  return translatedLegs[legIndex];
+};
+
+const calcurateMaxDuration = (legs: any) => {
+  let durationSum = 0;
+  let result = 0;
   let legIndex = 0;
   legs.forEach((leg: any) => {
     durationSum = 0;
@@ -14,9 +36,8 @@ const calculateDuration = (legs: any) => {
       l.mode = translateMode(l.mode);
       durationSum += l.duration;
     });
-    console.log("durationSum", durationSum);
-    result = Math.min(result, durationSum);
-    if (result < durationSum) {
+    result = Math.max(result, durationSum);
+    if (result > durationSum) {
       legIndex = legs.indexOf(leg);
     }
   });
@@ -73,15 +94,14 @@ export const fetchTransitRouteData = async (
     const legs = planData.plan.itineraries.map((itinerary: any) =>
       itinerary.legs.flatMap((leg: any) => leg)
     );
-    console.log("legs", legs);
 
-    const transitRouteData = calculateDuration(legs);
-    // console.log("transitRouteData", transitRouteData);
+    const minDuration = calculateMinDuration(legs);
+    const maxDuration = calcurateMaxDuration(legs);
 
     const normalizeTripId = (tripId: string) => tripId?.split(":").pop();
     const normalizeRouteId = (routeId: string) => routeId?.split(":").pop();
 
-    const enrichedRouteData = transitRouteData.map((leg: any) => {
+    const enrichedRouteData = minDuration.map((leg: any) => {
       if (leg.mode === "🚃") {
         // リアルタイムデータから一致する運行情報を取得
         const matchingRealtimeData = Array.from(busRealtimeData.values()).find(

@@ -48,6 +48,7 @@ export const fetchRouteData = async (
 
     if (data.routes.length > 0) {
       const legs = data.routes[0].legs;
+      console.log("fetchRoute legs", legs);
       const legsWithMode = legs.map((leg: any) => ({
         ...leg,
         mode,
@@ -69,7 +70,14 @@ export const fetchRouteData = async (
         const minutes = Math.round((duration % 3600) / 60);
         duration = `${hours}時間${minutes}分`;
       }
-
+      console.log(
+        "duration",
+        duration,
+        "distance",
+        distance,
+        "calories",
+        calories
+      );
       return { distance, duration, calories };
     } else {
       console.error("ルートが見つかりませんでした");

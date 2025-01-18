@@ -147,9 +147,12 @@ const Direction: FC<GetLocationProps> = ({
                   let fromToKey = Object.keys(data)[0];
                   let fromToValue = data[fromToKey];
                   if (data[fromToKey] === "Destination") fromToValue = "目的地";
-                  Object.keys(data)[0] === "Origin"
-                    ? (fromToKey = "出発地")
-                    : (fromToKey = Object.keys(data)[0]);
+                  if (Object.keys(data)[0] === "Origin") {
+                    fromToKey = "出発地";
+                  } else {
+                    fromToKey = Object.keys(data)[0];
+                  }
+
                   const perCaloriesKey = Object.keys(data)[1];
                   const perCaloriesValue = data[perCaloriesKey];
                   return (

@@ -11,7 +11,11 @@ type GetLocationProps = {
   distance: number | null;
   duration: number | null;
   intake: string | null;
-  setFetchRouteDataResult: (res: any) => void;
+  setFetchRouteDataResult: (
+    distance: number,
+    duration: number,
+    calories: number
+  ) => void;
   setPerCalories: (perCalories: PerCalories) => void;
   perCalories: PerCalories;
   sumCalories: number | null;
@@ -85,12 +89,14 @@ const Direction: FC<GetLocationProps> = ({
       console.log("res", res);
 
       const calories = res?.calories;
+      const time = res?.time;
+      const distance = res?.distance;
 
       if (calories) {
         const { perCalories, sumCalories } = calories;
         if (perCalories && perCalories.length > 0 && sumCalories) {
           setPerCalories(perCalories);
-          setSumCalories(sumCalories);
+          setFetchRouteDataResult(distance!, time!, sumCalories);
         }
       }
 
@@ -109,7 +115,8 @@ const Direction: FC<GetLocationProps> = ({
       weight
     );
     if (routeData) {
-      setFetchRouteDataResult(routeData);
+      const { distance, duration, calories } = routeData;
+      setFetchRouteDataResult(distance, duration, calories);
     }
   };
 

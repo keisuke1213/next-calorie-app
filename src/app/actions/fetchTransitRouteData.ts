@@ -6,7 +6,7 @@ import { fetchBusRealtimeData } from "./fetchGtfs";
 
 const calculateMinDuration = (legs: any) => {
   let durationSum = 0;
-  let result = 1000000000;
+  let duration = 1000000000;
   let legIndex = 0;
   const translatedLegs = legs.map((leg: any) =>
     leg.map((l: any) => ({
@@ -17,13 +17,13 @@ const calculateMinDuration = (legs: any) => {
 
   translatedLegs.forEach((leg: any, index: number) => {
     durationSum = leg.reduce((sum: number, l: any) => sum + l.duration, 0);
-    if (durationSum < result) {
-      result = durationSum;
+    if (durationSum < duration) {
+      duration = durationSum;
       legIndex = index;
     }
   });
 
-  return translatedLegs[legIndex];
+  return [translatedLegs[legIndex], duration];
 };
 
 const calcurateMaxDuration = (legs: any) => {
@@ -95,7 +95,9 @@ export const fetchTransitRouteData = async (
       itinerary.legs.flatMap((leg: any) => leg)
     );
 
-    const minDuration = calculateMinDuration(legs);
+    const minDurationRoute = calculateMinDuration(legs);
+    const [minDuration, duration] = minDurationRoute;
+    console.log("min", minDuration);
     const maxDuration = calcurateMaxDuration(legs);
 
     type StartAndEnd = {
@@ -107,8 +109,6 @@ export const fetchTransitRouteData = async (
     minDuration.forEach((l: any) => {
       startAndEnd.push({ [l.from.name]: l.to.name });
     });
-
-    console.log("startAndEnd", startAndEnd);
 
     const normalizeTripId = (tripId: string) => tripId?.split(":").pop();
     const normalizeRouteId = (routeId: string) => routeId?.split(":").pop();
@@ -137,10 +137,23 @@ export const fetchTransitRouteData = async (
       return leg;
     });
 
-    // console.log("enrichedRouteData", enrichedRouteData);
+    const hours = Math.floor(duration / 3600);
+    const minutes = Math.round((duration % 3600) / 60);
+    const time: any = `${hours}時間${minutes}分`;
+    let distance: any = 0;
+
+    minDuration.forEach((e: any) => {
+      console.log("dis", e.distance);
+      distance += e.distance;
+    });
+
+    const formde = Math.round(distance / 100) / 10;
+
+    distance = `${formde}km`;
+    console.log("distance", distance);
 
     const calories = calculateCalories(enrichedRouteData, weight);
-    return { calories, startAndEnd };
+    return { calories, startAndEnd, time, distance };
   } catch (error) {
     console.error("リアルタイム情報の取得に失敗しました", error);
     return;

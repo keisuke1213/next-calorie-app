@@ -159,8 +159,11 @@ export default function App() {
   const [weight, setWeight] = useState<number>(options[0]);
   const [fromTo, setFromTo] = useState<FromTo | undefined>(undefined);
 
-  const setFetchRouteDataResult = (res: any) => {
-    const { distance, duration, calories } = res;
+  const setFetchRouteDataResult = (
+    distance: number,
+    duration: number,
+    calories: number
+  ) => {
     setDistance(distance);
     setDuration(duration);
     setSumCalories(calories);
@@ -195,7 +198,8 @@ export default function App() {
         weight
       );
       if (res) {
-        setFetchRouteDataResult(res);
+        const { distance, duration, calories } = res;
+        setFetchRouteDataResult(distance, duration, calories);
       }
     }
   };

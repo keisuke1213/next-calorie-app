@@ -138,7 +138,12 @@ export default function App() {
     [key: string]: string;
   }[];
 
-  const { originCoords } = useLocation();
+  // const { originCoords } = useLocation();
+
+  const originCoords = {
+    latitude: 34.9851603,
+    longitude: 135.7584294,
+  };
 
   const [destination, setDestination] = useState<{
     latitude: number;
